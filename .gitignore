@@ -6,4 +6,4 @@ Temp/
 obj/
 Packages/
 .vsconfig
-/*.xlsx
+Excel/
