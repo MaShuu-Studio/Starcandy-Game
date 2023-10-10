@@ -32,9 +32,17 @@ public class DropObject : MonoBehaviour
 
     public void Upgrade()
     {
+        GameController.Instance.AddScore(level);
         level++;
+        // 수박 완성 시 파괴
+        if (level > 11)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Naming();
         transform.localScale *= 1.2f;
+
         StartCoroutine(Upgrading());
     }
 
