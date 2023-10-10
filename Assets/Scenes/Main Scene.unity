@@ -138,8 +138,8 @@ GameObject:
   - component: {fileID: 293112753}
   - component: {fileID: 293112752}
   m_Layer: 0
-  m_Name: Circle
-  m_TagString: Untagged
+  m_Name: Drop Object
+  m_TagString: Drop Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,6 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 080baff3920c6ac4fb563f7c6868716b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 1
+  trigger: {fileID: 293112757}
 --- !u!50 &293112753
 Rigidbody2D:
   serializedVersion: 4
