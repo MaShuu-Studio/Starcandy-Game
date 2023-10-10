@@ -58,6 +58,7 @@ public class Spawner : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            SoundController.Instance.AddSfx("DROP");
             curObject.ActiveObject(true);
             CreateObject();
         }

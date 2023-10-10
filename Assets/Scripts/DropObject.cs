@@ -33,6 +33,7 @@ public class DropObject : MonoBehaviour
     public void Upgrade()
     {
         GameController.Instance.AddScore(level);
+        SoundController.Instance.AddSfx("POP");
         level++;
         // 수박 완성 시 파괴
         if (level > 11)
