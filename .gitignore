@@ -1,0 +1,9 @@
+.vs/
+/Build/
+Library/
+Logs/
+Temp/
+obj/
+Packages/
+.vsconfig
+/*.xlsx
