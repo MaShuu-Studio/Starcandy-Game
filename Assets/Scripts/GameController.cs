@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
     private int[] addedScores;
     private int score;
 
-    private void Start()
+    public void Init()
     {
         score = 0;
         addedScores = new int[]
@@ -33,5 +33,11 @@ public class GameController : MonoBehaviour
     {
         score += addedScores[level];
         UIController.Instance.SetScore(score);
+    }
+
+    public void StartGame()
+    {
+        UIController.Instance.ChangeScene(1);
+        Spawner.Instance.StartGame();
     }
 }

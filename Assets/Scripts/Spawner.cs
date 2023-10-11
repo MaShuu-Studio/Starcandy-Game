@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    [SerializeField] private GameObject box;
     [SerializeField] private LineRenderer line;
     private Vector3 linePos;
 
@@ -38,7 +39,7 @@ public class Spawner : MonoBehaviour
     private bool ready;
 
     // Update is called once per frame
-    private void Start()
+    public void Init()
     {
         objectSizes = new float[]
         {
@@ -65,11 +66,20 @@ public class Spawner : MonoBehaviour
         objects = new List<DropObject>();
         int layerMask = 1 << LayerMask.NameToLayer("Box");
         RaycastHit2D hit = Physics2D.Raycast(objPrefab.transform.position, Vector2.down, 20f, layerMask);
+        linePos = new Vector3(0, hit.point.y);
         objPrefab.gameObject.SetActive(false);
+        line.gameObject.SetActive(false);
+
+        box.SetActive(false);
+    }
+
+    public void StartGame()
+    {
+        UIController.Instance.SetGrade(sprites);
+        box.SetActive(true);
 
         nextLevel = Random.Range(0, 5);
         CreateObject();
-        linePos = new Vector3(curObject.transform.position.x, hit.point.y);
     }
 
     void Update()
@@ -77,7 +87,7 @@ public class Spawner : MonoBehaviour
         if (ready)
         {
             Vector3 pos = GetPointPos();
-            curObject.Rigid.position = pos;
+            curObject.transform.position = pos;
 
             line.SetPosition(0, pos);
             linePos.x = pos.x;
@@ -110,7 +120,7 @@ public class Spawner : MonoBehaviour
 
         curObject = pool.Pop();
         curObject.SetLevel(nextLevel + 1, sprites[nextLevel], objectSizes[nextLevel]);
-        curObject.Rigid.position = GetPointPos();
+        curObject.transform.position = GetPointPos();
 
         nextLevel = Random.Range(0, 5);
         UIController.Instance.SetNext(sprites[nextLevel], objectSizes[nextLevel]);

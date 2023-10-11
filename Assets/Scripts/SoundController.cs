@@ -34,7 +34,7 @@ public class SoundController : MonoBehaviour
     public int SfxVolume { get { return sfxVolume; } }
     private int sfxVolume = 1;
 
-    private void Start()
+    public void Init()
     {
         sfxes = new Dictionary<string, AudioClip>();
         sfxPools = new Dictionary<string, SoundPool>();

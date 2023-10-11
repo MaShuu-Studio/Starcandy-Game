@@ -21,12 +21,22 @@ public class UIController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    [SerializeField] private GameObject[] scenes;
+
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image nextImage;
+    [SerializeField] private Image[] gradeImages;
 
-    private void Start()
+    public void Init()
     {
         scoreText.text = "0";
+        ChangeScene(0);
+    }
+
+    public void ChangeScene(int index)
+    {
+        for (int i = 0; i < scenes.Length; i++)
+            scenes[i].SetActive(i == index);
     }
 
     public void SetScore(int score)
@@ -38,5 +48,11 @@ public class UIController : MonoBehaviour
     {
         nextImage.sprite = sprite;
         nextImage.transform.localScale = Vector2.one * size;
+    }
+
+    public void SetGrade(Sprite[] sprites)
+    {
+        for (int i = 0; i < sprites.Length; i++)
+            gradeImages[i].sprite = sprites[i];
     }
 }

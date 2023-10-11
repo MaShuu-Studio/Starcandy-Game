@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\DropObjectPool.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Poolable.cs" />
+    <Compile Include="Assets\Scripts\Initializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
