@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour
     }
 
     [SerializeField] private GameObject box;
+    [SerializeField] private GameOverLine gameOverLine;
     [SerializeField] private LineRenderer line;
     private Vector3 linePos;
 
@@ -69,7 +70,6 @@ public class Spawner : MonoBehaviour
         linePos = new Vector3(0, hit.point.y);
         objPrefab.gameObject.SetActive(false);
         line.gameObject.SetActive(false);
-
         box.SetActive(false);
     }
 
@@ -78,8 +78,27 @@ public class Spawner : MonoBehaviour
         UIController.Instance.SetGrade(sprites);
         box.SetActive(true);
 
+        ready = false;
         nextLevel = Random.Range(0, 5);
         CreateObject();
+    }
+
+    public void GameOver()
+    {
+        ready = false;
+
+        line.gameObject.SetActive(false);
+        box.SetActive(false);
+
+        while (objects.Count > 0)
+        {
+            ReturnObject(objects[0]);
+        }
+    }
+
+    public bool CheckGameOver(float posY)
+    {
+        return posY > gameOverLine.transform.position.y;
     }
 
     void Update()

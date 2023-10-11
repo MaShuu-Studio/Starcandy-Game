@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
-    public static  SoundController Instance { get { return instance; } }
+    public static SoundController Instance { get { return instance; } }
     private static SoundController instance;
 
     private void Awake()

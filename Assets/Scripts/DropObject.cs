@@ -82,6 +82,11 @@ public class DropObject : Poolable
             if (Dropping && (collision.tag == "Drop Object" || collision.tag == "Box"))
             {
                 Dropping = false;
+                if (Spawner.Instance.CheckGameOver(_rigidbody.position.y - transform.localScale.y))
+                {
+                    GameController.Instance.GameOver();
+                    return;
+                }
                 Spawner.Instance.CreateObject();
             }
 

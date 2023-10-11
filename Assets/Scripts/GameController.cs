@@ -37,7 +37,15 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        score = 0;
+        UIController.Instance.SetScore(score);
         UIController.Instance.ChangeScene(1);
         Spawner.Instance.StartGame();
+    }
+
+    public void GameOver()
+    {
+        Spawner.Instance.GameOver();
+        UIController.Instance.ChangeScene(0);
     }
 }
