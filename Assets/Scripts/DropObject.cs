@@ -8,6 +8,7 @@ public class DropObject : Poolable
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private CircleCollider2D trigger;
+    public Rigidbody2D Rigid { get { return _rigidbody; } }
     private bool active;
     public bool Dropping { get; private set; }
 
@@ -42,10 +43,12 @@ public class DropObject : Poolable
     public void Naming()
     {
         gameObject.name = (active ? "T" : "F") + level.ToString();
+        _rigidbody.mass = level * 5;
     }
 
-    public void Upgrade()
+    public void Upgrade(Vector3 pos)
     {
+        _rigidbody.position = pos;
         GameController.Instance.AddScore(level);
         SoundController.Instance.AddSfx("POP");
         level++;
@@ -86,10 +89,10 @@ public class DropObject : Poolable
             {
                 if (collision.gameObject.name == gameObject.name)
                 {
-                    Upgrade();
-
                     DropObject drop = collision.GetComponent<DropObject>();
                     Spawner.Instance.ReturnObject(drop);
+
+                    Upgrade((_rigidbody.position + collision.attachedRigidbody.position) / 2);
                 }
             }
         }

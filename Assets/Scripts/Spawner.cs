@@ -77,7 +77,7 @@ public class Spawner : MonoBehaviour
         if (ready)
         {
             Vector3 pos = GetPointPos();
-            curObject.transform.position = pos;
+            curObject.Rigid.position = pos;
 
             line.SetPosition(0, pos);
             linePos.x = pos.x;
@@ -110,7 +110,7 @@ public class Spawner : MonoBehaviour
 
         curObject = pool.Pop();
         curObject.SetLevel(nextLevel + 1, sprites[nextLevel], objectSizes[nextLevel]);
-        curObject.transform.position = GetPointPos();
+        curObject.Rigid.position = GetPointPos();
 
         nextLevel = Random.Range(0, 5);
         UIController.Instance.SetNext(sprites[nextLevel], objectSizes[nextLevel]);
