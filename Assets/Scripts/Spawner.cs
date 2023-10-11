@@ -27,19 +27,26 @@ public class Spawner : MonoBehaviour
 
     private Vector3 linePos;
 
+    private Pool<DropObject> pool;
     private List<DropObject> objects;
     private DropObject curObject;
 
     // Update is called once per frame
     private void Start()
     {
-        objects = new List<DropObject>();
-        CreateObject();
+        objPrefab.MakePrefab("");
 
+        GameObject go = new GameObject("Pool");
+        go.transform.SetParent(transform);
+        pool = go.AddComponent<DropObjectPool>();
+        pool.Init(objPrefab);
+
+        objects = new List<DropObject>();
         int layerMask = 1 << LayerMask.NameToLayer("Box");
         RaycastHit2D hit = Physics2D.Raycast(objPrefab.transform.position, Vector2.down, 20f, layerMask);
         objPrefab.gameObject.SetActive(false);
 
+        CreateObject();
         linePos = new Vector3(curObject.transform.position.x, hit.point.y);
     }
 
@@ -66,9 +73,7 @@ public class Spawner : MonoBehaviour
 
     public void CreateObject()
     {
-        curObject = Instantiate(objPrefab);
-        curObject.gameObject.SetActive(true);
-        curObject.ActiveObject(false);
+        curObject = pool.Pop();
         objects.Add(curObject);
     }
 }

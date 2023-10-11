@@ -19,36 +19,38 @@ public class SoundController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    [SerializeField] private List<string> clipNames;
-    [SerializeField] private List<AudioClip> clips;
-    private Dictionary<string, AudioClip> sounds;
-
+    [SerializeField] private List<string> sfxNames;
+    [SerializeField] private List<AudioClip> sfxClips;
     [SerializeField] private AudioSource bgmSource;
-    [SerializeField] private GameObject sfxSource;
-    private List<AudioSource> sfxes;
+
+    public Dictionary<string, AudioClip> Sfxes { get { return sfxes; } }
+    private Dictionary<string, AudioClip> sfxes;
+
+    [Space]
+    [SerializeField] private CustomAudioSource sfxPrefab;
+    private Dictionary<string, SoundPool> sfxPools;
+
     private int bgmVolume = 1;
+    public int SfxVolume { get { return sfxVolume; } }
     private int sfxVolume = 1;
 
     private void Start()
     {
-        sounds = new Dictionary<string, AudioClip>();
-        sfxes = new List<AudioSource>();
-        for (int i = 0; i < clips.Count && i < clipNames.Count; i++)
+        sfxes = new Dictionary<string, AudioClip>();
+        sfxPools = new Dictionary<string, SoundPool>();
+        for (int i = 0; i < sfxNames.Count && i < sfxClips.Count; i++)
         {
-            sounds.Add(clipNames[i], clips[i]);
-        }
-    }
+            sfxes.Add(sfxNames[i], sfxClips[i]);
 
-    private void Update()
-    {
-        for (int i = 0; i < sfxes.Count; i++)
-        {
-            if (sfxes[i].isPlaying == false)
-            {
-                Destroy(sfxes[i]);
-                sfxes.RemoveAt(i);
-                i--;
-            }
+            CustomAudioSource source = Instantiate(sfxPrefab);
+            source.MakePrefab(sfxNames[i]);
+
+            GameObject go = new GameObject(sfxNames[i]);
+            go.transform.SetParent(transform);
+            SoundPool pool = go.AddComponent<SoundPool>();
+            pool.Init(source);
+
+            sfxPools.Add(sfxNames[i], pool);
         }
     }
 
@@ -58,13 +60,8 @@ public class SoundController : MonoBehaviour
 
     public void AddSfx(string name)
     {
-        if (sounds.ContainsKey(name) == false) return;
-
-        AudioSource source = sfxSource.AddComponent<AudioSource>();
-        source.clip = sounds[name];
-        source.volume = sfxVolume;
-        source.Play();
-        sfxes.Add(source);
+        if (sfxPools.ContainsKey(name) == false) return;
+        sfxPools[name].Pop();
     }
 
     public void SetBgmVolume(int volume)
@@ -75,11 +72,11 @@ public class SoundController : MonoBehaviour
     public void SetSfxVolume(int volume)
     {
         sfxVolume = volume;
-        foreach(var source in sfxes)
-        {
-            source.volume = volume;
-        }
+    }
+
+    public void StopAudio(string name, CustomAudioSource source)
+    {
+        if (sfxPools.ContainsKey(name) == false) return;
+        sfxPools[name].Push(source);
     }
 }
-
-

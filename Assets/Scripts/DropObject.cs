@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DropObject : MonoBehaviour
+public class DropObject : Poolable
 {
     private int level;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private CircleCollider2D trigger;
     private bool active;
 
-    private void Start()
+    public override void MakePrefab(string name)
     {
         level = 1;
         tag = "Drop Object";
@@ -18,6 +18,8 @@ public class DropObject : MonoBehaviour
 
     public void ActiveObject(bool b)
     {
+        transform.localScale = Vector3.one;
+
         if (b) _rigidbody.bodyType = RigidbodyType2D.Dynamic;
         else _rigidbody.bodyType = RigidbodyType2D.Static;
 
