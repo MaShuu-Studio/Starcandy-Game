@@ -35,6 +35,7 @@ public class Spawner : MonoBehaviour
     private List<DropObject> objects;
     private DropObject curObject;
     private int nextLevel;
+    private bool ready;
 
     // Update is called once per frame
     private void Start()
@@ -73,18 +74,22 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        Vector3 pos = GetPointPos();
-        curObject.transform.position = pos;
-
-        line.SetPosition(0, pos);
-        linePos.x = pos.x;
-        line.SetPosition(1, linePos);
-
-        if (Input.GetMouseButtonDown(0))
+        if (ready)
         {
-            SoundController.Instance.AddSfx("DROP");
-            curObject.ActiveObject(true);
-            CreateObject();
+            Vector3 pos = GetPointPos();
+            curObject.transform.position = pos;
+
+            line.SetPosition(0, pos);
+            linePos.x = pos.x;
+            line.SetPosition(1, linePos);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                ready = false;
+                SoundController.Instance.AddSfx("DROP");
+                curObject.ActiveObject(true);
+                line.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -101,6 +106,8 @@ public class Spawner : MonoBehaviour
 
     public void CreateObject()
     {
+        if (ready) return;
+
         curObject = pool.Pop();
         curObject.SetLevel(nextLevel + 1, sprites[nextLevel], objectSizes[nextLevel]);
         curObject.transform.position = GetPointPos();
@@ -109,10 +116,17 @@ public class Spawner : MonoBehaviour
         UIController.Instance.SetNext(sprites[nextLevel], objectSizes[nextLevel]);
 
         objects.Add(curObject);
+
+        line.gameObject.SetActive(true);
+        ready = true;
     }
 
     public void ReturnObject(DropObject dropObject)
     {
+        objects.Remove(dropObject);
         pool.Push(dropObject);
+
+        if (dropObject.Dropping) CreateObject();
+        dropObject.ActiveObject(false);
     }
 }

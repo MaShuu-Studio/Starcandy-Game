@@ -9,6 +9,7 @@ public class DropObject : Poolable
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private CircleCollider2D trigger;
     private bool active;
+    public bool Dropping { get; private set; }
 
     public override void MakePrefab(string name)
     {
@@ -22,12 +23,14 @@ public class DropObject : Poolable
         spriteRenderer.sprite = sprite;
         transform.localScale = Vector3.one * size;
         ActiveObject(false);
+
         Naming();
     }
 
     public void ActiveObject(bool b)
     {
         _rigidbody.simulated = b;
+        Dropping = b;
 
         if (b) _rigidbody.bodyType = RigidbodyType2D.Dynamic;
         else _rigidbody.bodyType = RigidbodyType2D.Static;
@@ -71,14 +74,23 @@ public class DropObject : Poolable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Drop Object"
-            && active && collision.name[0] == 'T')
+        if (active)
         {
-            if (collision.gameObject.name == gameObject.name)
+            if (Dropping && (collision.tag == "Drop Object" || collision.tag == "Box"))
             {
-                Upgrade();
-                DropObject drop = collision.GetComponent<DropObject>();
-                Spawner.Instance.ReturnObject(drop);
+                Dropping = false;
+                Spawner.Instance.CreateObject();
+            }
+
+            if (collision.tag == "Drop Object" && collision.name[0] == 'T')
+            {
+                if (collision.gameObject.name == gameObject.name)
+                {
+                    Upgrade();
+
+                    DropObject drop = collision.GetComponent<DropObject>();
+                    Spawner.Instance.ReturnObject(drop);
+                }
             }
         }
     }
