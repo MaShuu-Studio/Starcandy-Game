@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour
     }
 
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Image nextImage;
 
     private void Start()
     {
@@ -31,5 +32,11 @@ public class UIController : MonoBehaviour
     public void SetScore(int score)
     {
         scoreText.text = score.ToString();
+    }
+
+    public void SetNext(Sprite sprite, float size)
+    {
+        nextImage.sprite = sprite;
+        nextImage.transform.localScale = Vector2.one * size;
     }
 }

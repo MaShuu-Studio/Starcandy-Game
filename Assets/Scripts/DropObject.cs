@@ -5,20 +5,29 @@ using UnityEngine;
 public class DropObject : Poolable
 {
     private int level;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private CircleCollider2D trigger;
     private bool active;
 
     public override void MakePrefab(string name)
     {
-        level = 1;
         tag = "Drop Object";
         ActiveObject(false);
     }
 
+    public void SetLevel(int level, Sprite sprite, float size)
+    {
+        this.level = level;
+        spriteRenderer.sprite = sprite;
+        transform.localScale = Vector3.one * size;
+        ActiveObject(false);
+        Naming();
+    }
+
     public void ActiveObject(bool b)
     {
-        transform.localScale = Vector3.one;
+        _rigidbody.simulated = b;
 
         if (b) _rigidbody.bodyType = RigidbodyType2D.Dynamic;
         else _rigidbody.bodyType = RigidbodyType2D.Static;
@@ -40,11 +49,14 @@ public class DropObject : Poolable
         // 수박 완성 시 파괴
         if (level > 11)
         {
-            Destroy(gameObject);
+            ActiveObject(false);
+            StopAllCoroutines();
+            Spawner.Instance.ReturnObject(this);
             return;
         }
         Naming();
-        transform.localScale *= 1.2f;
+        spriteRenderer.sprite = Spawner.Instance.Sprites[level - 1];
+        transform.localScale = Vector3.one * Spawner.Instance.ObjectSizes[level - 1];
 
         StartCoroutine(Upgrading());
     }
@@ -65,7 +77,8 @@ public class DropObject : Poolable
             if (collision.gameObject.name == gameObject.name)
             {
                 Upgrade();
-                Destroy(collision.gameObject);
+                DropObject drop = collision.GetComponent<DropObject>();
+                Spawner.Instance.ReturnObject(drop);
             }
         }
     }

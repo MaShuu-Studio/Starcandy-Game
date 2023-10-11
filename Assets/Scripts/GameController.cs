@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     {
         score = 0;
         addedScores = new int[]
-            {0,1,3,6,10,15,21,28,36,45,55,66 };
+            { 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66 };
     }
 
     public void AddScore(int level)
