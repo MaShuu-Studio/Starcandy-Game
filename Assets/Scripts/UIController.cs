@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour
     }
 
     [SerializeField] private GameObject[] scenes;
+    [SerializeField] private TextMeshProUGUI bgmText;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject nextImageObject;
@@ -40,6 +41,15 @@ public class UIController : MonoBehaviour
     {
         for (int i = 0; i < scenes.Length; i++)
             scenes[i].SetActive(i == index);
+    }
+    public void SetBGM(string name)
+    {
+        bgmText.text = name;
+    }
+
+    public void ChangeBgm(int i)
+    {
+        SoundController.Instance.ChangeBgm(i);
     }
 
     public void SetScore(int score)

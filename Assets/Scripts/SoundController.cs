@@ -18,7 +18,8 @@ public class SoundController : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
+    [SerializeField] private string[] bgmNames;
+    [SerializeField] private AudioClip[] bgmClips;
     [SerializeField] private List<string> sfxNames;
     [SerializeField] private List<AudioClip> sfxClips;
     [SerializeField] private AudioSource bgmSource;
@@ -30,12 +31,16 @@ public class SoundController : MonoBehaviour
     [SerializeField] private CustomAudioSource sfxPrefab;
     private Dictionary<string, SoundPool> sfxPools;
 
+    private int bgmIndex;
     private int bgmVolume = 1;
     public int SfxVolume { get { return sfxVolume; } }
     private int sfxVolume = 1;
 
     public void Init()
     {
+        bgmIndex = 0;
+        ChangeBgm(0);
+
         sfxes = new Dictionary<string, AudioClip>();
         sfxPools = new Dictionary<string, SoundPool>();
         for (int i = 0; i < sfxNames.Count && i < sfxClips.Count; i++)
@@ -54,8 +59,16 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    public void SetBgm(string name)
+    public void ChangeBgm(int i)
     {
+        bgmIndex += i;
+
+        if (bgmIndex < 0) bgmIndex = bgmClips.Length - 1;
+        else if (bgmIndex >= bgmClips.Length) bgmIndex = 0;
+
+        bgmSource.clip = bgmClips[bgmIndex];
+        bgmSource.Play();
+        UIController.Instance.SetBGM(bgmNames[bgmIndex]);
     }
 
     public void AddSfx(string name)
