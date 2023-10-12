@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\UIController.cs" />
     <Compile Include="Assets\Scripts\DropObject.cs" />
     <Compile Include="Assets\Scripts\CustomAudioSource.cs" />
+    <Compile Include="Assets\Scripts\ScoreStorage.cs" />
     <Compile Include="Assets\Scripts\Pool.cs" />
     <Compile Include="Assets\Scripts\SoundPool.cs" />
     <Compile Include="Assets\Scripts\DropObjectPool.cs" />

@@ -27,6 +27,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image nextImage;
     [SerializeField] private Image[] gradeImages;
 
+    [SerializeField] private TextMeshProUGUI[] bestScoreTexts;
+
     public void Init()
     {
         scoreText.text = "0";
@@ -42,6 +44,12 @@ public class UIController : MonoBehaviour
     public void SetScore(int score)
     {
         scoreText.text = score.ToString();
+    }
+
+    public void SetBestScore(int[] bestScore)
+    {
+        for (int i = 0; i < bestScore.Length; i++)
+            bestScoreTexts[i].text = bestScore[i].ToString(); ;
     }
 
     public void SetNext(Sprite sprite, float size)

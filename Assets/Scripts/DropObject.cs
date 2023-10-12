@@ -49,7 +49,7 @@ public class DropObject : Poolable
     public void Upgrade(Vector3 pos)
     {
         _rigidbody.position = pos;
-        GameController.Instance.AddScore(level);
+        ScoreStorage.Instance.AddScore(level);
         SoundController.Instance.AddSfx("POP");
         level++;
         // 수박 완성 시 파괴

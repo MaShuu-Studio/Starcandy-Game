@@ -19,33 +19,17 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private int[] addedScores;
-    private int score;
-
-    public void Init()
-    {
-        score = 0;
-        addedScores = new int[]
-            { 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66 };
-    }
-
-    public void AddScore(int level)
-    {
-        score += addedScores[level];
-        UIController.Instance.SetScore(score);
-    }
-
     public void StartGame()
     {
-        score = 0;
-        UIController.Instance.SetScore(score);
         UIController.Instance.ChangeScene(1);
+        ScoreStorage.Instance.StartGame();
         Spawner.Instance.StartGame();
     }
 
     public void GameOver()
     {
         Spawner.Instance.GameOver();
+        ScoreStorage.Instance.EndGame();
         UIController.Instance.ChangeScene(0);
     }
 }
