@@ -27,8 +27,11 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float boundary;
     [SerializeField] private float height;
 
-    [SerializeField] private Sprite[] sprites;
+    private float objBoundary;
+
     public Sprite[] Sprites { get { return sprites; } }
+    private Sprite[] sprites;
+
     public float[] ObjectSizes { get { return objectSizes; } }
     private float[] objectSizes;
 
@@ -75,6 +78,7 @@ public class Spawner : MonoBehaviour
 
     public void StartGame()
     {
+        sprites = SpriteManager.Instance.GetSprites;
         UIController.Instance.SetGrade(sprites);
         box.SetActive(true);
 
@@ -125,8 +129,8 @@ public class Spawner : MonoBehaviour
     private Vector3 GetPointPos()
     {
         Vector3 pos = CameraController.Instance.ScreenToWorldPoint(Input.mousePosition);
-        if (pos.x > boundary) pos.x = boundary;
-        else if (pos.x < -boundary) pos.x = -boundary;
+        if (pos.x > objBoundary) pos.x = objBoundary;
+        else if (pos.x < -objBoundary) pos.x = -objBoundary;
         pos.y = height;
         pos.z = 0;
 
@@ -139,6 +143,8 @@ public class Spawner : MonoBehaviour
 
         curObject = pool.Pop();
         curObject.SetLevel(nextLevel + 1, sprites[nextLevel], objectSizes[nextLevel]);
+
+        objBoundary = boundary - curObject.transform.localScale.x / 2;
         curObject.transform.position = GetPointPos();
 
         nextLevel = Random.Range(0, 5);

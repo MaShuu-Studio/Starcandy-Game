@@ -19,8 +19,18 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private bool isPlaying = false;
+    private void Update()
+    {
+        if (isPlaying && Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameOver();
+        }
+    }
+
     public void StartGame()
     {
+        isPlaying = true;
         UIController.Instance.ChangeScene(1);
         ScoreStorage.Instance.StartGame();
         Spawner.Instance.StartGame();
@@ -28,6 +38,7 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        isPlaying = false;
         Spawner.Instance.GameOver();
         ScoreStorage.Instance.EndGame();
         UIController.Instance.ChangeScene(0);

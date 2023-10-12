@@ -24,6 +24,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject[] scenes;
 
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject nextImageObject;
     [SerializeField] private Image nextImage;
     [SerializeField] private Image[] gradeImages;
 
@@ -55,7 +56,7 @@ public class UIController : MonoBehaviour
     public void SetNext(Sprite sprite, float size)
     {
         nextImage.sprite = sprite;
-        nextImage.transform.localScale = Vector2.one * size;
+        nextImageObject.transform.localScale = Vector2.one * size;
     }
 
     public void SetGrade(Sprite[] sprites)

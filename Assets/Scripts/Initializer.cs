@@ -21,6 +21,7 @@ public class Initializer : MonoBehaviour
 
     private void Start()
     {
+        SpriteManager.Instance.Init();
         ScoreStorage.Instance.Init();
         UIController.Instance.Init();
         SoundController.Instance.Init();
