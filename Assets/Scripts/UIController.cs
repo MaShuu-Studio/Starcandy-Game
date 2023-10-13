@@ -43,6 +43,11 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private TextMeshProUGUI sfxValueText;
+
+    [SerializeField] private TMP_Dropdown graphicDrop;
+    [SerializeField] private Toggle[] graphicToggles;
+    private int screenType;
+
     [SerializeField] private GameObject giveupButton;
 
     public void Init()
@@ -55,6 +60,18 @@ public class UIController : MonoBehaviour
         sfxSlider.value = 1;
         AdjustBGM();
         AdjustSFX();
+
+        switch (Screen.fullScreenMode)
+        {
+            case FullScreenMode.ExclusiveFullScreen: screenType = 0; break;
+            case FullScreenMode.FullScreenWindow: screenType = 1; break;
+            case FullScreenMode.Windowed: screenType = 2; break;
+        }
+        for (int i = 0; i < graphicToggles.Length; i++)
+            graphicToggles[i].isOn = i == screenType;
+
+        if (Screen.width == 1280) graphicDrop.value = 0;
+        else graphicDrop.value = 1;
     }
 
     public void OpenSetting(bool b)
@@ -90,6 +107,30 @@ public class UIController : MonoBehaviour
     public void ChangeBgm(int i)
     {
         SoundController.Instance.ChangeBgm(i);
+    }
+
+    public void ChangeRes()
+    {
+        if (graphicDrop.value == 0)
+        {
+            Screen.SetResolution(1280, 720, Screen.fullScreenMode);
+        }
+        else if (graphicDrop.value == 1)
+        {
+            Screen.SetResolution(1920, 1080, Screen.fullScreenMode);
+        }
+    }
+
+    public void ChangeScreenType(int index)
+    {
+        if (graphicToggles[index].isOn == false) return;
+
+        screenType = index;
+        //graphicDrop.gameObject.SetActive(screenType != 1);
+        FullScreenMode mode = FullScreenMode.ExclusiveFullScreen;
+        if (screenType == 1) mode = FullScreenMode.FullScreenWindow;
+        if (screenType == 2) mode = FullScreenMode.Windowed;
+        Screen.SetResolution(Screen.width, Screen.height, mode);
     }
 
     public void SetScore(int score)

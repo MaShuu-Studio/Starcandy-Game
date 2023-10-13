@@ -17,10 +17,13 @@ public class GameController : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        Application.targetFrameRate = 60;
     }
 
     public bool Pause { get { return pause; } }
     private bool pause = false;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
