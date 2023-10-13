@@ -20,12 +20,20 @@ public class GameController : MonoBehaviour
     }
 
     private bool isPlaying = false;
+    public bool Pause { get { return pause; } }
+    private bool pause = false;
     private void Update()
     {
-        if (isPlaying && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GameOver();
+            PauseGame();
         }
+    }
+
+    public void PauseGame()
+    {
+        pause = !pause;
+        UIController.Instance.OpenSetting(pause);
     }
 
     public void StartGame()

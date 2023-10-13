@@ -39,6 +39,7 @@ public class ScoreStorage : MonoBehaviour
         addedScores = new int[]
             { 0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66 };
     }
+
     public void StartGame()
     {
         score = 0;

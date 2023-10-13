@@ -22,19 +22,37 @@ public class UIController : MonoBehaviour
     }
 
     [SerializeField] private GameObject[] scenes;
-    [SerializeField] private TextMeshProUGUI bgmText;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject nextImageObject;
     [SerializeField] private Image nextImage;
     [SerializeField] private Image[] gradeImages;
-
     [SerializeField] private TextMeshProUGUI[] bestScoreTexts;
+
+    [Header("Setting")]
+    [SerializeField] private GameObject setting;
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private TextMeshProUGUI bgmValueText;
+    [SerializeField] private TextMeshProUGUI bgmText;
+
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private TextMeshProUGUI sfxValueText;
 
     public void Init()
     {
         scoreText.text = "0";
         ChangeScene(0);
+
+        OpenSetting(false);
+        bgmSlider.value = 10;
+        sfxSlider.value = 10;
+        AdjustBGM();
+        AdjustSFX();
+    }
+
+    public void OpenSetting(bool b)
+    {
+        setting.SetActive(b);
     }
 
     public void ChangeScene(int index)
@@ -42,6 +60,19 @@ public class UIController : MonoBehaviour
         for (int i = 0; i < scenes.Length; i++)
             scenes[i].SetActive(i == index);
     }
+
+    public void AdjustBGM()
+    {
+        SoundController.Instance.SetBgmVolume(bgmSlider.value);
+        bgmValueText.text = ((int)bgmSlider.value).ToString();
+    }
+
+    public void AdjustSFX()
+    {
+        SoundController.Instance.SetSfxVolume(sfxSlider.value);
+        sfxValueText.text = ((int)sfxSlider.value).ToString();
+    }
+
     public void SetBGM(string name)
     {
         bgmText.text = name;

@@ -32,14 +32,15 @@ public class SoundController : MonoBehaviour
     private Dictionary<string, SoundPool> sfxPools;
 
     private int bgmIndex;
-    private int bgmVolume = 1;
-    public int SfxVolume { get { return sfxVolume; } }
-    private int sfxVolume = 1;
+    private float bgmVolume = 1;
+    public float SfxVolume { get { return sfxVolume; } }
+    private float sfxVolume = 1;
 
     public void Init()
     {
         bgmIndex = 0;
         ChangeBgm(0);
+        bgmSource.loop = true;
 
         sfxes = new Dictionary<string, AudioClip>();
         sfxPools = new Dictionary<string, SoundPool>();
@@ -77,14 +78,14 @@ public class SoundController : MonoBehaviour
         sfxPools[name].Pop();
     }
 
-    public void SetBgmVolume(int volume)
+    public void SetBgmVolume(float volume)
     {
-        bgmSource.volume = volume;
+        bgmSource.volume = volume / 10;
     }
 
-    public void SetSfxVolume(int volume)
+    public void SetSfxVolume(float volume)
     {
-        sfxVolume = volume;
+        sfxVolume = volume / 10;
     }
 
     public void StopAudio(string name, CustomAudioSource source)

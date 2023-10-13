@@ -107,7 +107,7 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (ready)
+        if (GameController.Instance.Pause == false && ready)
         {
             Vector3 pos = GetPointPos();
             curObject.transform.position = pos;
