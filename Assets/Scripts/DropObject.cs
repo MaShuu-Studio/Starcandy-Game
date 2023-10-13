@@ -6,6 +6,7 @@ public class DropObject : Poolable
 {
     private int level;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer[] sprites;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private CircleCollider2D trigger;
     public Rigidbody2D Rigid { get { return _rigidbody; } }
@@ -36,6 +37,9 @@ public class DropObject : Poolable
         if (b) _rigidbody.bodyType = RigidbodyType2D.Dynamic;
         else _rigidbody.bodyType = RigidbodyType2D.Static;
 
+        for (int i = 0; i < sprites.Length; i++)
+            sprites[i].sortingOrder = (b) ? i : i + 10;
+
         active = b;
         Naming();
     }
@@ -43,11 +47,12 @@ public class DropObject : Poolable
     public void Naming()
     {
         gameObject.name = (active ? "T" : "F") + level.ToString();
-        _rigidbody.mass = level * 5;
+        _rigidbody.mass = level * 3;
     }
 
     public void Upgrade(Vector3 pos)
     {
+        _rigidbody.velocity = Vector2.zero;
         _rigidbody.position = pos;
         ScoreStorage.Instance.AddScore(level);
         SoundController.Instance.AddSfx("POP");
@@ -79,17 +84,6 @@ public class DropObject : Poolable
     {
         if (active)
         {
-            if (Dropping && (collision.tag == "Drop Object" || collision.tag == "Box"))
-            {
-                Dropping = false;
-                if (Spawner.Instance.CheckGameOver(_rigidbody.position.y - transform.localScale.y))
-                {
-                    GameController.Instance.GameOver();
-                    return;
-                }
-                Spawner.Instance.CreateObject();
-            }
-
             if (collision.tag == "Drop Object" && collision.name[0] == 'T')
             {
                 if (collision.gameObject.name == gameObject.name)
@@ -99,6 +93,17 @@ public class DropObject : Poolable
 
                     Upgrade((_rigidbody.position + collision.attachedRigidbody.position) / 2);
                 }
+            }
+
+            if (Dropping && (collision.tag == "Drop Object" || collision.tag == "Box"))
+            {
+                Dropping = false;
+                if (Spawner.Instance.CheckGameOver(_rigidbody.position.y - transform.localScale.y))
+                {
+                    GameController.Instance.GameOver();
+                    return;
+                }
+                Spawner.Instance.CreateObject();
             }
         }
     }
