@@ -37,6 +37,7 @@ public class CustomAudioSource : Poolable
     {
         if (source != null)
         {
+            source.volume = SoundController.Instance.SfxVolume;
             source.Play();
             play = true;
         }

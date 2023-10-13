@@ -78,6 +78,11 @@ public class Spawner : MonoBehaviour
 
     public void StartGame()
     {
+        while (objects.Count > 0)
+        {
+            ReturnObject(objects[0]);
+        }
+
         sprites = SpriteManager.Instance.GetSprites;
         UIController.Instance.SetGrade(sprites);
         box.SetActive(true);
@@ -87,17 +92,20 @@ public class Spawner : MonoBehaviour
         CreateObject();
     }
 
-    public void GameOver()
+    public void StopGame()
     {
         ready = false;
-
         line.gameObject.SetActive(false);
-        box.SetActive(false);
+    }
 
+    public void Title()
+    {
+        StopGame();
         while (objects.Count > 0)
         {
             ReturnObject(objects[0]);
         }
+        box.SetActive(false);
     }
 
     public bool CheckGameOver(float posY)
@@ -158,6 +166,8 @@ public class Spawner : MonoBehaviour
 
     public void ReturnObject(DropObject dropObject)
     {
+        if (objects.Contains(dropObject) == false) return;
+
         objects.Remove(dropObject);
         pool.Push(dropObject);
 

@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private bool isPlaying = false;
     public bool Pause { get { return pause; } }
     private bool pause = false;
     private void Update()
@@ -38,17 +37,33 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        isPlaying = true;
         UIController.Instance.ChangeScene(1);
         ScoreStorage.Instance.StartGame();
         Spawner.Instance.StartGame();
     }
 
-    public void GameOver()
+    public void Title()
     {
-        isPlaying = false;
-        Spawner.Instance.GameOver();
+        Spawner.Instance.Title();
         ScoreStorage.Instance.EndGame();
         UIController.Instance.ChangeScene(0);
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(EndGame());
+    }
+
+    private IEnumerator EndGame()
+    {
+        Spawner.Instance.StopGame();
+        ScoreStorage.Instance.EndGame();
+        yield return new WaitForEndOfFrame();
+
+        Texture2D texture = ScreenCapture.CaptureScreenshotAsTexture();
+        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
+
+        UIController.Instance.EndGame(sprite);
+        yield return null;
     }
 }

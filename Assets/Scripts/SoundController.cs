@@ -32,7 +32,6 @@ public class SoundController : MonoBehaviour
     private Dictionary<string, SoundPool> sfxPools;
 
     private int bgmIndex;
-    private float bgmVolume = 1;
     public float SfxVolume { get { return sfxVolume; } }
     private float sfxVolume = 1;
 

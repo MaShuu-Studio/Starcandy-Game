@@ -29,6 +29,12 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image[] gradeImages;
     [SerializeField] private TextMeshProUGUI[] bestScoreTexts;
 
+    [Header("Game Over")]
+    [SerializeField] private GameObject gameEndObject;
+    [SerializeField] private Image gameEndScreenShot;
+    [SerializeField] private TextMeshProUGUI gameEndScoreText;
+    [SerializeField] private TextMeshProUGUI[] gameEndBestScoreTexts;
+
     [Header("Setting")]
     [SerializeField] private GameObject setting;
     [SerializeField] private Slider bgmSlider;
@@ -37,6 +43,7 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private TextMeshProUGUI sfxValueText;
+    [SerializeField] private GameObject giveupButton;
 
     public void Init()
     {
@@ -44,8 +51,8 @@ public class UIController : MonoBehaviour
         ChangeScene(0);
 
         OpenSetting(false);
-        bgmSlider.value = 10;
-        sfxSlider.value = 10;
+        bgmSlider.value = 1;
+        sfxSlider.value = 1;
         AdjustBGM();
         AdjustSFX();
     }
@@ -57,6 +64,8 @@ public class UIController : MonoBehaviour
 
     public void ChangeScene(int index)
     {
+        gameEndObject.SetActive(false);
+        giveupButton.SetActive(index == 1);
         for (int i = 0; i < scenes.Length; i++)
             scenes[i].SetActive(i == index);
     }
@@ -86,12 +95,16 @@ public class UIController : MonoBehaviour
     public void SetScore(int score)
     {
         scoreText.text = score.ToString();
+        gameEndScoreText.text = score.ToString();
     }
 
     public void SetBestScore(int[] bestScore)
     {
         for (int i = 0; i < bestScore.Length; i++)
-            bestScoreTexts[i].text = bestScore[i].ToString(); ;
+        {
+            bestScoreTexts[i].text = bestScore[i].ToString();
+            gameEndBestScoreTexts[i].text = bestScore[i].ToString();
+        }
     }
 
     public void SetNext(Sprite sprite, float size)
@@ -104,5 +117,11 @@ public class UIController : MonoBehaviour
     {
         for (int i = 0; i < sprites.Length; i++)
             gradeImages[i].sprite = sprites[i];
+    }
+
+    public void EndGame(Sprite sprite)
+    {
+        gameEndObject.SetActive(true);
+        gameEndScreenShot.sprite = sprite;
     }
 }
