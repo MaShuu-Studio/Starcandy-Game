@@ -29,6 +29,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image[] gradeImages;
     [SerializeField] private TextMeshProUGUI[] bestScoreTexts;
 
+    [Header("Set Icons")]
+    [SerializeField] private Icon iconPrefab;
+    [SerializeField] private RectTransform iconsParent;
+    [SerializeField] private Image[] iconList;
+
     [Header("Game Over")]
     [SerializeField] private GameObject gameEndObject;
     [SerializeField] private Image gameEndScreenShot;
@@ -72,6 +77,20 @@ public class UIController : MonoBehaviour
 
         if (Screen.width == 1280) graphicDrop.value = 0;
         else graphicDrop.value = 1;
+
+        iconPrefab.gameObject.SetActive(false);
+    }
+
+    public void SetIcons(Sprite[] sprites)
+    {
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            Icon icon = Instantiate(iconPrefab, iconsParent);
+            icon.SetIcon(sprites[i], i);
+        }
+
+        iconsParent.sizeDelta = new Vector2(475, 125 * (sprites.Length / 4 + 1));
+
     }
 
     public void OpenSetting(bool b)
@@ -154,10 +173,27 @@ public class UIController : MonoBehaviour
         nextImageObject.transform.localScale = Vector2.one * size;
     }
 
-    public void SetGrade(Sprite[] sprites)
+    public void SetGrade()
     {
+        Sprite[] sprites = SpriteManager.Instance.GetSprites;
         for (int i = 0; i < sprites.Length; i++)
+        {
             gradeImages[i].sprite = sprites[i];
+            iconList[i].sprite = sprites[i];
+        }
+    }
+
+    public void StartChangeGrade()
+    {
+        for (int i = 0; i < iconList.Length; i++)
+        {
+            iconList[i].sprite = null;
+        }
+    }
+
+    public void ChangeGrade(int index, Sprite sprite)
+    {
+        iconList[index].sprite = sprite;
     }
 
     public void EndGame(Sprite sprite)

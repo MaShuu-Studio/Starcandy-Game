@@ -84,7 +84,7 @@ public class Spawner : MonoBehaviour
         }
 
         sprites = SpriteManager.Instance.GetSprites;
-        UIController.Instance.SetGrade(sprites);
+        UIController.Instance.SetGrade();
         box.SetActive(true);
 
         ready = false;

@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\Spawner.cs" />
     <Compile Include="Assets\Scripts\GameOverLine.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
+    <Compile Include="Assets\Scripts\Icon.cs" />
     <Compile Include="Assets\Scripts\DropObject.cs" />
     <Compile Include="Assets\Scripts\CustomAudioSource.cs" />
     <Compile Include="Assets\Scripts\ScoreStorage.cs" />
