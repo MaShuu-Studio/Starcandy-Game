@@ -35,7 +35,7 @@ public class SpriteManager : MonoBehaviour
         }
     }
 
-    private int preset; // 0: 나츠키, 1: 쵸키, 2: 반, 3: 테리
+    private int preset; // 0: 나츠키, 1: 쵸키, 2: 반, 3: 테리, 4: 별사탕
     public void Init()
     {
         preset = 0;
@@ -47,19 +47,36 @@ public class SpriteManager : MonoBehaviour
     public void ChangePreset(int index)
     {
         preset = index;
-        if (preset < 0) preset = 0;
-        if (preset > 3) preset = 3;
 
         // 0: 유튜브 통일
         // 1~10: 나츠키
         // 11~20: 쵸키
         // 21~30: 반
         // 31~40: 테리
+        // 41~46: 별사탕, 문, 떼굴, 박수, 점프, 좌우
+        // 스타데이즈: 문 나 쵸 반 테 박수 오 녹 호 올 좌우
 
-        spriteIndexes[0] = 0;
-        for (int i = 1; i < 11; i++)
+        if (preset < 4)
         {
-            spriteIndexes[i] = i + 10 * preset;
+            spriteIndexes[0] = 0;
+            for (int i = 1; i < 11; i++)
+            {
+                spriteIndexes[i] = i + 10 * preset;
+            }
+        }
+        else
+        {
+            spriteIndexes[0] = 42;
+            spriteIndexes[1] = 9;
+            spriteIndexes[2] = 19;
+            spriteIndexes[3] = 29;
+            spriteIndexes[4] = 39;
+            spriteIndexes[5] = 44;
+            spriteIndexes[6] = 5;
+            spriteIndexes[7] = 13;
+            spriteIndexes[8] = 24;
+            spriteIndexes[9] = 35;
+            spriteIndexes[10] = 46;
         }
 
         UIController.Instance.SetGrade();
