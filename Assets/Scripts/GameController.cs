@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +21,8 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Application.targetFrameRate = 60;
+        scorePath = Path.Combine(Application.persistentDataPath, "Score.bin");
+        settingPath = Path.Combine(Application.persistentDataPath, "setting.ini");
     }
 
     public bool Pause { get { return pause; } }
@@ -69,4 +73,92 @@ public class GameController : MonoBehaviour
         UIController.Instance.EndGame(sprite);
         yield return null;
     }
+
+
+    private string scorePath;
+    private string settingPath;
+
+    public void SaveSetting()
+    {
+        // 가벼운 프로젝트인 만큼 간단하게 처리
+        // 0: bgmIndex
+        // 1: bgmVolume
+        // 2: sfxVolume
+        // 3 ~ 13: iconIndex
+
+        string setting = SoundController.Instance.BgmIndex.ToString() + ",";
+        setting += SoundController.Instance.BgmVolume.ToString() + ",";
+        setting += SoundController.Instance.SfxVolume.ToString() + ",";
+        for (int i = 0; i < SpriteManager.Instance.SpriteIndexes.Length; i++)
+        {
+            setting += SpriteManager.Instance.SpriteIndexes[i].ToString() + ",";
+        }
+
+        File.WriteAllText(settingPath, setting);
+    }
+
+    public void LoadSetting()
+    {
+        int bgm, bgmV, sfxV;
+        int[] arr = new int[11];
+        if (File.Exists(settingPath) == false)
+        {
+            bgm = 0;
+            bgmV = 1;
+            sfxV = 1;
+            arr = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        }
+        else
+        {
+            string setting = File.ReadAllText(settingPath);
+            string[] settings = setting.Split(",");
+
+            int.TryParse(settings[0], out bgm);
+            int.TryParse(settings[1], out bgmV);
+            int.TryParse(settings[2], out sfxV);
+            for (int i = 0; i < arr.Length && i < setting.Length - 3; i++)
+            {
+                int.TryParse(settings[i + 3], out arr[i]);
+            }
+        }
+
+        SoundController.Instance.SetBgm(bgm);
+        UIController.Instance.SetBgmVolume(bgmV);
+        UIController.Instance.SetSfxVolume(sfxV);
+        SpriteManager.Instance.SetSpriteIndexes(arr);
+    }
+
+    public void SaveScore(int[] bestScore)
+    {
+        byte[] data = new byte[bestScore.Length * sizeof(int)];
+        for (int i = 0; i < bestScore.Length; i++)
+        {
+            byte[] tmp = BitConverter.GetBytes(bestScore[i]);
+            Buffer.BlockCopy(tmp, 0, data, i * sizeof(int), tmp.Length);
+        }
+
+        File.WriteAllBytes(scorePath, data);
+    }
+
+    public int[] LoadScore()
+    {
+        if (File.Exists(scorePath) == false) return new int[3];
+        int[] bestScore = new int[3];
+        byte[] data = File.ReadAllBytes(scorePath);
+
+        for (int i = 0; i < data.Length / sizeof(int); i++)
+        {
+            byte[] tmp = new byte[sizeof(int)];
+            Buffer.BlockCopy(data, i * sizeof(int), tmp, 0, sizeof(int));
+            bestScore[i] = BitConverter.ToInt32(tmp);
+        }
+
+        return bestScore;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }

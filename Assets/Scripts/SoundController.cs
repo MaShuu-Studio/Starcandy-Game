@@ -31,14 +31,17 @@ public class SoundController : MonoBehaviour
     [SerializeField] private CustomAudioSource sfxPrefab;
     private Dictionary<string, SoundPool> sfxPools;
 
+    public int BgmIndex { get { return bgmIndex; } }
     private int bgmIndex;
-    public float SfxVolume { get { return sfxVolume; } }
-    private float sfxVolume = 1;
+
+    public int BgmVolume { get { return bgmVolume; } }
+    private int bgmVolume = 1;
+
+    public int SfxVolume { get { return sfxVolume; } }
+    private int sfxVolume = 1;
 
     public void Init()
     {
-        bgmIndex = 0;
-        ChangeBgm(0);
         bgmSource.loop = true;
 
         sfxes = new Dictionary<string, AudioClip>();
@@ -71,20 +74,27 @@ public class SoundController : MonoBehaviour
         UIController.Instance.SetBGM(bgmNames[bgmIndex]);
     }
 
+    public void SetBgm(int index)
+    {
+        bgmIndex = index;
+        ChangeBgm(0);
+    }
+
     public void AddSfx(string name)
     {
         if (sfxPools.ContainsKey(name) == false) return;
         sfxPools[name].Pop();
     }
 
-    public void SetBgmVolume(float volume)
+    public void SetBgmVolume(int volume)
     {
-        bgmSource.volume = volume / 10;
+        bgmVolume = volume;
+        bgmSource.volume = volume / 10f;
     }
 
-    public void SetSfxVolume(float volume)
+    public void SetSfxVolume(int volume)
     {
-        sfxVolume = volume / 10;
+        sfxVolume = volume;
     }
 
     public void StopAudio(string name, CustomAudioSource source)

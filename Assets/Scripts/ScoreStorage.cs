@@ -1,13 +1,9 @@
-using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreStorage : MonoBehaviour
 {
-    private static string path;
-
     public static  ScoreStorage Instance { get { return instance; } }
     private static ScoreStorage instance;
 
@@ -21,8 +17,6 @@ public class ScoreStorage : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject); 
-        
-        path = Path.Combine(Application.persistentDataPath, "Score.bin");
     }
 
     private int[] addedScores;
@@ -31,8 +25,7 @@ public class ScoreStorage : MonoBehaviour
 
     public void Init()
     {
-        bestScore = new int[3];
-        LoadScore();
+        bestScore = GameController.Instance.LoadScore();
         UIController.Instance.SetBestScore(bestScore);
 
         score = 0;
@@ -64,33 +57,7 @@ public class ScoreStorage : MonoBehaviour
             }
         }
 
-        SaveScore();
+        GameController.Instance.SaveScore(bestScore);
         UIController.Instance.SetBestScore(bestScore);
-    }
-
-    public void LoadScore()
-    {
-        if (File.Exists(path) == false) return;
-
-        byte[] data = File.ReadAllBytes(path);
-
-        for (int i = 0; i < data.Length / sizeof(int); i++)
-        {
-            byte[] tmp = new byte[sizeof(int)];
-            Buffer.BlockCopy(data, i * sizeof(int), tmp, 0, sizeof(int));
-            bestScore[i] = BitConverter.ToInt32(tmp);
-        }
-    }
-
-    public void SaveScore()
-    {
-        byte[] data = new byte[bestScore.Length * sizeof(int)];
-        for (int i = 0; i < bestScore.Length; i++)
-        {
-            byte[] tmp = BitConverter.GetBytes(bestScore[i]);
-            Buffer.BlockCopy(tmp, 0, data, i * sizeof(int), tmp.Length);
-        }
-
-        File.WriteAllBytes(path, data);
     }
 }

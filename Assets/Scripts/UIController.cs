@@ -61,10 +61,6 @@ public class UIController : MonoBehaviour
         ChangeScene(0);
 
         OpenSetting(false);
-        bgmSlider.value = 1;
-        sfxSlider.value = 1;
-        AdjustBGM();
-        AdjustSFX();
 
         switch (Screen.fullScreenMode)
         {
@@ -90,7 +86,6 @@ public class UIController : MonoBehaviour
         }
 
         iconsParent.sizeDelta = new Vector2(475, 125 * (sprites.Length / 4 + 1));
-
     }
 
     public void OpenSetting(bool b)
@@ -106,15 +101,29 @@ public class UIController : MonoBehaviour
             scenes[i].SetActive(i == index);
     }
 
+    public void SetBgmVolume(int volume)
+    {
+        bgmSlider.value = volume;
+        bgmValueText.text = volume.ToString();
+        SoundController.Instance.SetBgmVolume(volume);
+    }
+
+    public void SetSfxVolume(int volume)
+    {
+        sfxSlider.value = volume;
+        sfxValueText.text = volume.ToString();
+        SoundController.Instance.SetSfxVolume(volume);
+    }
+
     public void AdjustBGM()
     {
-        SoundController.Instance.SetBgmVolume(bgmSlider.value);
+        SoundController.Instance.SetBgmVolume((int)bgmSlider.value);
         bgmValueText.text = ((int)bgmSlider.value).ToString();
     }
 
     public void AdjustSFX()
     {
-        SoundController.Instance.SetSfxVolume(sfxSlider.value);
+        SoundController.Instance.SetSfxVolume((int)sfxSlider.value);
         sfxValueText.text = ((int)sfxSlider.value).ToString();
     }
 
@@ -181,6 +190,7 @@ public class UIController : MonoBehaviour
             gradeImages[i].sprite = sprites[i];
             iconList[i].sprite = sprites[i];
         }
+        GameController.Instance.SaveSetting();
     }
 
     public void StartChangeGrade()

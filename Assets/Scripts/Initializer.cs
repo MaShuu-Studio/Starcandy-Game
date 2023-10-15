@@ -26,5 +26,7 @@ public class Initializer : MonoBehaviour
         UIController.Instance.Init();
         SoundController.Instance.Init();
         Spawner.Instance.Init();
+
+        GameController.Instance.LoadSetting();
     }
 }

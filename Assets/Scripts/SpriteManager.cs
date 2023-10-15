@@ -20,6 +20,7 @@ public class SpriteManager : MonoBehaviour
     }
 
     [SerializeField] private Sprite[] sprites;
+    public int[] SpriteIndexes { get { return spriteIndexes; } }
     private int[] spriteIndexes;
     public Sprite[] GetSprites
     {
@@ -39,7 +40,6 @@ public class SpriteManager : MonoBehaviour
     {
         preset = 0;
         spriteIndexes = new int[11];
-        ChangePreset(0);
 
         UIController.Instance.SetIcons(sprites);
     }
@@ -96,5 +96,12 @@ public class SpriteManager : MonoBehaviour
             changing = false;
             UIController.Instance.SetGrade();
         }
+    }
+
+    public void SetSpriteIndexes(int[] indexes)
+    {
+        for (int i = 0; i < spriteIndexes.Length; i++)
+            spriteIndexes[i] = indexes[i];
+        UIController.Instance.SetGrade();
     }
 }
