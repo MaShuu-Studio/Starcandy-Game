@@ -124,7 +124,8 @@ public class Spawner : MonoBehaviour
             linePos.x = pos.x;
             line.SetPosition(1, linePos);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0)) //Android
+            //if (Input.GetMouseButtonDown(0)) // PC
             {
                 ready = false;
                 SoundController.Instance.AddSfx("DROP");

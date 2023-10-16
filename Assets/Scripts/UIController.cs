@@ -44,7 +44,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject setting;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private TextMeshProUGUI bgmValueText;
-    [SerializeField] private TextMeshProUGUI bgmText;
 
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private TextMeshProUGUI sfxValueText;
@@ -54,6 +53,16 @@ public class UIController : MonoBehaviour
     private int screenType;
 
     [SerializeField] private GameObject giveupButton;
+
+    [Header("Playlist")]
+    [SerializeField] private TextMeshProUGUI curBGMText;
+    [SerializeField] private RectTransform plContent;
+    [SerializeField] private PlayListItem plItemPrefab;
+    [SerializeField] private Image playButton;
+    [SerializeField] private Image cycleButton;
+    [SerializeField] private Sprite[] playSprites;
+    [SerializeField] private Sprite[] cycleSprites;
+    private List<PlayListItem> plItems;
 
     public void Init()
     {
@@ -75,6 +84,17 @@ public class UIController : MonoBehaviour
         else graphicDrop.value = 1;
 
         iconPrefab.gameObject.SetActive(false);
+
+        plItems = new List<PlayListItem>();
+        // 플레이리스트
+        for(int i = 0; i < SoundController.Instance.BgmClips.Length; i++)
+        {
+            PlayListItem item = Instantiate(plItemPrefab, plContent);
+            item.SetIcon(i, SoundController.Instance.BgmClips[i]);
+            plItems.Add(item);
+        }
+        plItemPrefab.gameObject.SetActive(false);
+        plContent.sizeDelta = new Vector2(470, SoundController.Instance.BgmClips.Length * 75);
     }
 
     public void SetIcons(Sprite[] sprites)
@@ -115,6 +135,11 @@ public class UIController : MonoBehaviour
         SoundController.Instance.SetSfxVolume(volume);
     }
 
+    public void AddPlaylist(int index, bool b)
+    {
+        plItems[index].AddPlaylist(b);
+    }
+
     public void AdjustBGM()
     {
         SoundController.Instance.SetBgmVolume((int)bgmSlider.value);
@@ -127,14 +152,28 @@ public class UIController : MonoBehaviour
         sfxValueText.text = ((int)sfxSlider.value).ToString();
     }
 
-    public void SetBGM(string name)
+    public void PlayPause()
     {
-        bgmText.text = name;
+        if (SoundController.Instance.isPlay) playButton.sprite = playSprites[0];
+        else playButton.sprite = playSprites[1];
+    }
+
+    public void ChangePlayType()
+    {
+        SoundController.Instance.ChangePlayType();
+        cycleButton.sprite = cycleSprites[(int)SoundController.Instance.PType];
     }
 
     public void ChangeBgm(int i)
     {
-        SoundController.Instance.ChangeBgm(i);
+        if (SoundController.Instance.PType == SoundController.PlayType.RANDOM)
+            SoundController.Instance.ShuffleBGM();
+        else SoundController.Instance.ChangeBgm(i);
+    }
+
+    public void SetBgm(string name)
+    {
+        curBGMText.text = name;
     }
 
     public void ChangeRes()
