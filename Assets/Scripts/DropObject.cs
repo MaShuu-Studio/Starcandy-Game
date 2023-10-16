@@ -47,7 +47,7 @@ public class DropObject : Poolable
     public void Naming()
     {
         gameObject.name = (active ? "T" : "F") + level.ToString();
-        _rigidbody.mass = level * 3;
+        if (level == 1) trigger.radius = 0.52f;
     }
 
     public void Upgrade(Vector3 pos)
