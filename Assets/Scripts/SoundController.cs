@@ -51,6 +51,8 @@ public class SoundController : MonoBehaviour
     public int SfxVolume { get { return sfxVolume; } }
     private int sfxVolume = 1;
 
+    private bool isLoad = false;
+
     public void Init()
     {
         playType = PlayType.CYCLE;
@@ -94,10 +96,14 @@ public class SoundController : MonoBehaviour
 
             sfxPools.Add(sfxNames[i], pool);
         }
+
+        isLoad = true;
     }
 
     private void Update()
     {
+        if (isLoad == false) return;
+
         if (!pause && !isPlay)
         {
             if (playType == PlayType.CYCLE) ChangeBgm(1);
@@ -224,7 +230,7 @@ public class SoundController : MonoBehaviour
         bgmSource.clip = bgmClips[bgmIndex].clip;
         bgmSource.Play();
 
-        GameController.Instance.SaveSetting();
+        DataManager.SaveSetting();
         UIController.Instance.SetBgm(bgmClips[bgmIndex].name);
     }
 

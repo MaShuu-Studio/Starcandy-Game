@@ -21,12 +21,20 @@ public class Initializer : MonoBehaviour
 
     private void Start()
     {
-        SpriteManager.Instance.Init();
+        Init();
+    }
+
+    private async void Init()
+    {
+        UIController.Instance.ChangeScene(0);
+        await SpriteManager.Instance.Init();
         ScoreStorage.Instance.Init();
         SoundController.Instance.Init();
         Spawner.Instance.Init();
         UIController.Instance.Init();
 
-        GameController.Instance.LoadSetting();
+        DataManager.LoadSetting();
+        GameController.Instance.isLoad = true;
+        UIController.Instance.ChangeScene(1);
     }
 }

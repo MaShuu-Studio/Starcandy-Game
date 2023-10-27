@@ -25,7 +25,7 @@ public class ScoreStorage : MonoBehaviour
 
     public void Init()
     {
-        bestScore = GameController.Instance.LoadScore();
+        bestScore = DataManager.LoadScore();
         UIController.Instance.SetBestScore(bestScore);
 
         score = 0;
@@ -57,7 +57,7 @@ public class ScoreStorage : MonoBehaviour
             }
         }
 
-        GameController.Instance.SaveScore(bestScore);
+        DataManager.SaveScore(bestScore);
         UIController.Instance.SetBestScore(bestScore);
     }
 }

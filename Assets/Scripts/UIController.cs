@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // 0: Loading, 1: Title, 2: Game
     [SerializeField] private GameObject[] scenes;
 
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -41,6 +42,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] gameEndBestScoreTexts;
 
     [Header("Setting")]
+    [SerializeField] private GameObject settingButton;
     [SerializeField] private GameObject setting;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private TextMeshProUGUI bgmValueText;
@@ -67,8 +69,7 @@ public class UIController : MonoBehaviour
     public void Init()
     {
         scoreText.text = "0";
-        ChangeScene(0);
-
+        settingButton.SetActive(true);
         OpenSetting(false);
 
         switch (Screen.fullScreenMode)
@@ -97,15 +98,15 @@ public class UIController : MonoBehaviour
         plContent.sizeDelta = new Vector2(470, SoundController.Instance.BgmClips.Length * 75);
     }
 
-    public void SetIcons(Sprite[] sprites)
+    public void SetIcons(List<Sprite> sprites)
     {
-        for (int i = 0; i < sprites.Length; i++)
+        for (int i = 0; i < sprites.Count; i++)
         {
             Icon icon = Instantiate(iconPrefab, iconsParent);
             icon.SetIcon(sprites[i], i);
         }
 
-        iconsParent.sizeDelta = new Vector2(475, 125 * (sprites.Length / 4 + 1));
+        iconsParent.sizeDelta = new Vector2(475, 125 * (sprites.Count / 4 + 1));
     }
 
     public void OpenSetting(bool b)
@@ -116,7 +117,7 @@ public class UIController : MonoBehaviour
     public void ChangeScene(int index)
     {
         gameEndObject.SetActive(false);
-        giveupButton.SetActive(index == 1);
+        giveupButton.SetActive(index == 2);
         for (int i = 0; i < scenes.Length; i++)
             scenes[i].SetActive(i == index);
     }
@@ -229,7 +230,7 @@ public class UIController : MonoBehaviour
             gradeImages[i].sprite = sprites[i];
             iconList[i].sprite = sprites[i];
         }
-        GameController.Instance.SaveSetting();
+        DataManager.SaveSetting();
     }
 
     public void StartChangeGrade()

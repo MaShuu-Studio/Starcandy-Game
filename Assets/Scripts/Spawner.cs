@@ -41,6 +41,7 @@ public class Spawner : MonoBehaviour
     private DropObject curObject;
     private int nextLevel;
     private bool ready;
+    private bool isLoad = false;
 
     // Update is called once per frame
     public void Init()
@@ -74,6 +75,7 @@ public class Spawner : MonoBehaviour
         objPrefab.gameObject.SetActive(false);
         line.gameObject.SetActive(false);
         box.SetActive(false);
+        isLoad = true;
     }
 
     public void StartGame()
@@ -115,6 +117,8 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+        if (isLoad == false) return;
+
         if (GameController.Instance.Pause == false && ready)
         {
             Vector3 pos = GetPointPos();

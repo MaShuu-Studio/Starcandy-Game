@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,8 @@ public class SpriteManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    [SerializeField] private Sprite[] sprites;
+    [SerializeField] private List<Sprite> sprites;
+    private int originSpriteAmount;
     public int[] SpriteIndexes { get { return spriteIndexes; } }
     private int[] spriteIndexes;
     public Sprite[] GetSprites
@@ -36,11 +38,21 @@ public class SpriteManager : MonoBehaviour
     }
 
     private int preset; // 0: ³ªÃ÷Å°, 1: ÃÝÅ°, 2: ¹Ý, 3: Å×¸®, 4: º°»çÅÁ
-    public void Init()
+    public async Task Init()
     {
         preset = 0;
         spriteIndexes = new int[11];
 
+        originSpriteAmount = sprites.Count;
+        
+        List<string> files = DataManager.GetFiles("/Sprites/");
+        for (int i = 0; i < files.Count; i++)
+        {
+            Sprite sprite = await DataManager.LoadSprite(files[i]);
+            if (sprite == null) continue;
+            sprites.Add(sprite);
+        }
+        
         UIController.Instance.SetIcons(sprites);
     }
 
@@ -118,7 +130,11 @@ public class SpriteManager : MonoBehaviour
     public void SetSpriteIndexes(int[] indexes)
     {
         for (int i = 0; i < spriteIndexes.Length; i++)
-            spriteIndexes[i] = indexes[i];
+        {
+            int index = indexes[i];
+            if (index >= sprites.Count) index = 0;
+            spriteIndexes[i] = index;
+        }
         UIController.Instance.SetGrade();
     }
 }
