@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class SpriteManager : MonoBehaviour
 {
@@ -38,23 +39,58 @@ public class SpriteManager : MonoBehaviour
     }
 
     private int preset; // 0: ³ªÃ÷Å°, 1: ÃÝÅ°, 2: ¹Ý, 3: Å×¸®, 4: º°»çÅÁ
+    private int count;
     public async Task Init()
     {
         preset = 0;
         spriteIndexes = new int[11];
 
         originSpriteAmount = sprites.Count;
-        
+
         List<string> files = DataManager.GetFiles("/Sprites/");
         for (int i = 0; i < files.Count; i++)
         {
-            Sprite sprite = await DataManager.LoadSprite(files[i]);
-            if (sprite == null) continue;
-            sprites.Add(sprite);
+#if UNITY_STANDALONE
+        string path = Application.streamingAssetsPath + "/Sprites/" + files[i];
+#endif
+#if UNITY_ANDROID
+            string path = Application.persistentDataPath + "/Sprites/" + files[i];
+#endif
+            AddSprite(path);
         }
-        
+        while (count < files.Count) await Task.Yield();
+
         UIController.Instance.SetIcons(sprites);
     }
+
+    public async void AddSprite(string path)
+    {
+        Sprite sprite = await DataManager.LoadSprite(path);
+        count++;
+        if (sprite == null) return;
+        sprites.Add(sprite);
+    }
+#if UNITY_ANDROID
+    public void LoadImage()
+    {
+        NativeGallery.GetImageFromGallery((path) =>
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            Texture2D texture = NativeGallery.LoadImageAtPath(path, -1, false);
+            if (texture == null) return;
+            Sprite sprite = DataManager.TextureToSprite(texture, path);
+            sprites.Add(sprite);
+            DataManager.SaveImage(texture, sprite.name);
+            ResetCustomSprites();
+        });
+    }
+    public void ResetCustomSprites()
+    {
+        List<Sprite> customSprites = sprites.GetRange(originSpriteAmount, sprites.Count - originSpriteAmount);
+        customSprites.Sort((a, b) => string.Compare(a.name, b.name));
+        UIController.Instance.SetIcons(customSprites, originSpriteAmount);
+    }
+#endif
 
     public void ChangePreset(int index)
     {

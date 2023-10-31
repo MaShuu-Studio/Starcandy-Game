@@ -34,6 +34,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Icon iconPrefab;
     [SerializeField] private RectTransform iconsParent;
     [SerializeField] private Image[] iconList;
+    [SerializeField] private GameObject galleryIcon;
+    private List<Icon> icons = new List<Icon>();
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameEndObject;
@@ -43,13 +45,14 @@ public class UIController : MonoBehaviour
 
     [Header("Setting")]
     [SerializeField] private GameObject settingButton;
-    [SerializeField] private GameObject setting;
+    [SerializeField] private RectTransform setting;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private TextMeshProUGUI bgmValueText;
 
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private TextMeshProUGUI sfxValueText;
 
+    [SerializeField] private GameObject graphicOptionObject;
     [SerializeField] private TMP_Dropdown graphicDrop;
     [SerializeField] private Toggle[] graphicToggles;
     private int screenType;
@@ -70,6 +73,17 @@ public class UIController : MonoBehaviour
     {
         scoreText.text = "0";
         settingButton.SetActive(true);
+#if UNITY_STANDALONE
+        graphicOptionObject.SetActive(true);
+        setting.sizeDelta = new Vector2(650, 550);
+        galleryIcon.SetActive(false);
+#endif
+#if UNITY_ANDROID
+        graphicOptionObject.SetActive(false);
+        setting.sizeDelta = new Vector2(650, 350);
+        galleryIcon.SetActive(true);
+#endif
+
         OpenSetting(false);
 
         switch (Screen.fullScreenMode)
@@ -88,7 +102,7 @@ public class UIController : MonoBehaviour
 
         plItems = new List<PlayListItem>();
         // 플레이리스트
-        for(int i = 0; i < SoundController.Instance.BgmClips.Length; i++)
+        for (int i = 0; i < SoundController.Instance.BgmClips.Length; i++)
         {
             PlayListItem item = Instantiate(plItemPrefab, plContent);
             item.SetIcon(i, SoundController.Instance.BgmClips[i]);
@@ -98,20 +112,37 @@ public class UIController : MonoBehaviour
         plContent.sizeDelta = new Vector2(470, SoundController.Instance.BgmClips.Length * 75);
     }
 
-    public void SetIcons(List<Sprite> sprites)
+    public void SetIcons(List<Sprite> sprites, int targetCount = -1)
     {
+        if (targetCount != -1)
+        {
+            while (icons.Count > targetCount)
+            {
+                Destroy(icons[icons.Count - 1].gameObject);
+                icons.RemoveAt(icons.Count - 1);
+            }
+        }
+
         for (int i = 0; i < sprites.Count; i++)
         {
             Icon icon = Instantiate(iconPrefab, iconsParent);
             icon.SetIcon(sprites[i], i);
+            icons.Add(icon);
         }
 
-        iconsParent.sizeDelta = new Vector2(475, 125 * (sprites.Count / 4 + 1));
+        iconsParent.sizeDelta = new Vector2(475, 125 * ((icons.Count - 1) / 4 + 1));
     }
+
+#if UNITY_ANDROID
+    public void LoadImage()
+    {
+        SpriteManager.Instance.LoadImage();
+    }
+#endif
 
     public void OpenSetting(bool b)
     {
-        setting.SetActive(b);
+        setting.gameObject.SetActive(b);
     }
 
     public void ChangeScene(int index)

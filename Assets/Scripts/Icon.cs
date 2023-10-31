@@ -14,5 +14,6 @@ public class Icon : MonoBehaviour
         image.sprite = sprite;
         this.index = index;
         GetComponent<Button>().onClick.AddListener(() => SpriteManager.Instance.SetSpriteIndex(this.index));
+        gameObject.SetActive(true);
     }
 }

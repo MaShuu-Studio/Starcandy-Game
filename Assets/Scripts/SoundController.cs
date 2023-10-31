@@ -195,6 +195,14 @@ public class SoundController : MonoBehaviour
         if (playType > PlayType.RANDOM) playType = PlayType.CYCLE;
 
         bgmSource.loop = playType == PlayType.ONECYCLE;
+        DataManager.SaveSetting();
+    }
+
+    public void SetPlayType(int ptype)
+    {
+        ptype--;
+        playType = (PlayType)ptype;
+        UIController.Instance.ChangePlayType();
     }
 
     public void ShuffleBGM()

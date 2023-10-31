@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class Initializer : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Initializer : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        Application.targetFrameRate = 60;
     }
 
     private void Start()
@@ -27,6 +30,7 @@ public class Initializer : MonoBehaviour
     private async void Init()
     {
         UIController.Instance.ChangeScene(0);
+        DataManager.Init();
         await SpriteManager.Instance.Init();
         ScoreStorage.Instance.Init();
         SoundController.Instance.Init();
