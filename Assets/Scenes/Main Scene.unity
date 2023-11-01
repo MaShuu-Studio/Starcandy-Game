@@ -22187,7 +22187,7 @@ MonoBehaviour:
   - "\uC7A0\uC774 \uB4DC\uB294 \uAC70\uB9AC"
   - "\uD154\uB808\uCE90\uC2A4\uD130 \uBE44\uBCF4\uC774"
   - "\uD788\uBC14\uB098"
-  - "\uB808\uD034\uC5E0"
+  - "\uB808\uD034\uC5E0 with \uBA54\uB9AC"
   - "\uC0AC\uB791\uC744 \uC804\uD558\uACE0 \uC2F6\uB2E4\uB358\uAC00"
   - Lilith
   - Unholy
@@ -22195,7 +22195,11 @@ MonoBehaviour:
   - "\uC9C0\uD0AC \uC564 \uD558\uC774\uB4DC \uBA54\uB4E4\uB9AC"
   - See Tinh
   - "\uC0AC\uB791\uC758 \uAF43"
-  - "Bad \u221E End \u221E Night"
+  - "Bad \u221E End \u221E Night with LUVDIA"
+  - "\uC7AC\uD68C with \uC0E4\uBA54\uC774"
+  - "\uD478\uB984\uACFC \uC5EC\uB984 with \uC138\uBE44\uC544"
+  - Very Merry Christmas with VRECORD
+  - Connecting with VRECORD
   bgmClips:
   - name: 
     clip: {fileID: 8300000, guid: a8fd08345e16709468e4acab204e41e2, type: 3}
@@ -22509,6 +22513,30 @@ MonoBehaviour:
     c: 1
     v: 1
     t: 1
+  - name: 
+    clip: {fileID: 8300000, guid: 29b51a72d16ccc141a4e0f79e4932da0, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 91cb3331e06ee0a428648ce3013ce36d, type: 3}
+    n: 0
+    c: 1
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: f22abf1f1e3250f4cbabc76bcd2ae6f8, type: 3}
+    n: 0
+    c: 1
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 6e4c107d278d43844ba124e36f175325, type: 3}
+    n: 0
+    c: 1
+    v: 0
+    t: 0
   sfxNames:
   - DROP
   - POP
