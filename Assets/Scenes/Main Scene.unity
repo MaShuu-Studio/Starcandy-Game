@@ -22200,6 +22200,12 @@ MonoBehaviour:
   - "\uD478\uB984\uACFC \uC5EC\uB984 with \uC138\uBE44\uC544"
   - Very Merry Christmas with VRECORD
   - Connecting with VRECORD
+  - "\uD68C\uD68C\uAE30\uB2F4"
+  - "\uC9C0\uAD6C\uBCF8 (3\uAC1C \uAD6D\uC5B4)"
+  - "\uCF8C\uCCAD"
+  - "\uCE74\uD0C0\uC624\uBAA8\uC774"
+  - "\uC2E4\uB8E8\uC5E3 with _"
+  - Everything Goes On with _
   bgmClips:
   - name: 
     clip: {fileID: 8300000, guid: a8fd08345e16709468e4acab204e41e2, type: 3}
@@ -22535,6 +22541,42 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6e4c107d278d43844ba124e36f175325, type: 3}
     n: 0
     c: 1
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 25bdb2c637e7d8844ba02587827bcd13, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 1080529bb5a69a041b073a855a7a49e5, type: 3}
+    n: 1
+    c: 1
+    v: 1
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 50623802499029649ad5ce0d0c52c6d4, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 77c75ce67b41fe145b7c7145d0b8ee4b, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 2c50bca8c5e010d4e92fcadb3a89c4d5, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - name: 
+    clip: {fileID: 8300000, guid: 88967169c8ee87442b21092eb58e9845, type: 3}
+    n: 1
+    c: 0
     v: 0
     t: 0
   sfxNames:
