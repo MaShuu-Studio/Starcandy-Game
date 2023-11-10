@@ -104,6 +104,8 @@ public class SoundController : MonoBehaviour
     {
         if (isLoad == false) return;
 
+        if (isPlay) UIController.Instance.ChangeProgress(bgmSource.time / bgmSource.clip.length);
+
         if (!pause && !isPlay)
         {
             if (playType == PlayType.CYCLE) ChangeBgm(1);
@@ -118,6 +120,11 @@ public class SoundController : MonoBehaviour
             bgmIndexes[i] = b;
             UIController.Instance.AddPlaylist(i, b);
         }
+    }
+
+    public void ChangeBGMProgress(float p)
+    {
+        bgmSource.time = p * bgmSource.clip.length;
     }
 
     public bool CheckRemainMusic()
@@ -236,6 +243,7 @@ public class SoundController : MonoBehaviour
         pause = false;
         bgmIndex = index;
         bgmSource.clip = bgmClips[bgmIndex].clip;
+        bgmSource.time = 0;
         bgmSource.Play();
 
         DataManager.SaveSetting();

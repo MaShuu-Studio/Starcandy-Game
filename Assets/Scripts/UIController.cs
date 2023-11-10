@@ -67,6 +67,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image cycleButton;
     [SerializeField] private Sprite[] playSprites;
     [SerializeField] private Sprite[] cycleSprites;
+    [SerializeField] private Slider progress;
+    private bool selectProgressHandle;
     private List<PlayListItem> plItems;
 
     public void Init()
@@ -143,6 +145,7 @@ public class UIController : MonoBehaviour
     public void OpenSetting(bool b)
     {
         setting.gameObject.SetActive(b);
+        selectProgressHandle = false;
     }
 
     public void ChangeScene(int index)
@@ -206,6 +209,21 @@ public class UIController : MonoBehaviour
     public void SetBgm(string name)
     {
         curBGMText.text = name;
+    }
+
+    public void ChangeProgress(float p)
+    {
+        if (selectProgressHandle == false) progress.value = p;
+    }
+
+    public void SelectProgressHandle(bool b)
+    {
+        selectProgressHandle = b;
+        // 위치를 조정했을 때
+        if (selectProgressHandle == false)
+        {
+            SoundController.Instance.ChangeBGMProgress(progress.value);
+        }
     }
 
     public void ChangeRes()
