@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "2a5296001b027ece",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "2a5296001b027ece",
+        "name": "com.Shuu.StarcandyGame",
+        "processId": 19618,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,50 +11,86 @@
         {
             "deviceId": "2a5296001b027ece",
             "name": "com.sec.android.app.launcher",
-            "processId": 1895,
-            "exited": false
-        },
-        {
-            "deviceId": "2a5296001b027ece",
-            "name": "com.sec.android.app.voicenote",
-            "processId": 30905,
-            "exited": false
-        },
-        {
-            "deviceId": "2a5296001b027ece",
-            "name": "com.sec.android.app.myfiles",
-            "processId": 24475,
+            "processId": 1903,
             "exited": false
         },
         {
             "deviceId": "2a5296001b027ece",
             "name": "com.Shuu.StarcandyGame",
-            "processId": 15212,
+            "processId": 23806,
             "exited": true
         },
         {
             "deviceId": "2a5296001b027ece",
-            "name": "com.kakao.talk",
-            "processId": 8117,
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 23989,
+            "exited": true
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 27076,
+            "exited": true
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 25878,
+            "exited": true
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 26795,
             "exited": false
         },
         {
             "deviceId": "2a5296001b027ece",
             "name": "com.Shuu.StarcandyGame",
-            "processId": 16952,
-            "exited": true
+            "processId": 12013,
+            "exited": false
         },
         {
             "deviceId": "2a5296001b027ece",
             "name": "com.Shuu.StarcandyGame",
-            "processId": 28442,
-            "exited": true
+            "processId": 11018,
+            "exited": false
         },
         {
             "deviceId": "2a5296001b027ece",
             "name": "com.Shuu.StarcandyGame",
-            "processId": 29061,
-            "exited": true
+            "processId": 14860,
+            "exited": false
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 11583,
+            "exited": false
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 14255,
+            "exited": false
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 20731,
+            "exited": false
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 15674,
+            "exited": false
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 19618,
+            "exited": false
         }
     ],
     "m_Tags": {

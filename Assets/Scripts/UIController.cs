@@ -22,13 +22,19 @@ public class UIController : MonoBehaviour
     }
 
     // 0: Loading, 1: Title, 2: Game
+    [SerializeField] private CanvasScaler canvasScaler;
     [SerializeField] private GameObject[] scenes;
 
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private GameObject nextImageObject;
-    [SerializeField] private Image nextImage;
-    [SerializeField] private Image[] gradeImages;
-    [SerializeField] private TextMeshProUGUI[] bestScoreTexts;
+    [Space]
+    [SerializeField] private GameObject[] landscapes;
+    [SerializeField] private GameObject[] portraits;
+
+    // movechild를 Landscape와 Portrait으로 이동시키는 형태
+    // 각 index로 매칭되게 되어있음.
+    [Space]
+    [SerializeField] private Transform[] landscapeParents;
+    [SerializeField] private Transform[] portraitParents;
+    [SerializeField] private RectTransform[] movedChilds;
 
     [Header("Set Icons")]
     [SerializeField] private Icon iconPrefab;
@@ -36,6 +42,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image[] iconList;
     [SerializeField] private GameObject galleryIcon;
     private List<Icon> icons = new List<Icon>();
+
+    [Header("Game Scene")]
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject nextImageObject;
+    [SerializeField] private Image nextImage;
+    [SerializeField] private Image[] gradeImages;
+    [SerializeField] private TextMeshProUGUI[] bestScoreTexts;
 
     [Header("Game Over")]
     [SerializeField] private GameObject gameEndObject;
@@ -57,7 +70,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Toggle[] graphicToggles;
     private int screenType;
 
-    [SerializeField] private GameObject giveupButton;
+    [SerializeField] private GameObject[] giveupButtons;
 
     [Header("Playlist")]
     [SerializeField] private TextMeshProUGUI curBGMText;
@@ -79,13 +92,15 @@ public class UIController : MonoBehaviour
         graphicOptionObject.SetActive(true);
         setting.sizeDelta = new Vector2(650, 550);
         galleryIcon.SetActive(false);
+        SetDeviceOrientation(false); // Windows는 무조건 Landscape임.
 #endif
 #if UNITY_ANDROID
         graphicOptionObject.SetActive(false);
         setting.sizeDelta = new Vector2(650, 350);
         galleryIcon.SetActive(true);
+        isPortrait = Screen.orientation == ScreenOrientation.Portrait;
+        SetDeviceOrientation(isPortrait);
 #endif
-
         OpenSetting(false);
 
         switch (Screen.fullScreenMode)
@@ -114,6 +129,92 @@ public class UIController : MonoBehaviour
         plContent.sizeDelta = new Vector2(470, SoundController.Instance.BgmClips.Length * 75);
     }
 
+#if UNITY_ANDROID
+    private void Update()
+    {
+        if (GameController.Instance.isLoad == false) return;
+
+        bool isPortrait;
+        DeviceOrientation orientation = Input.deviceOrientation;
+
+        if (orientation == DeviceOrientation.Portrait
+            && Screen.orientation != ScreenOrientation.Portrait)
+        {
+            Screen.orientation = ScreenOrientation.Portrait;
+            isPortrait = true;
+        }
+        else if (orientation == DeviceOrientation.LandscapeLeft
+            && Screen.orientation != ScreenOrientation.LandscapeLeft)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            isPortrait = false;
+        }
+        else if (orientation == DeviceOrientation.LandscapeRight
+            && Screen.orientation != ScreenOrientation.LandscapeRight)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeRight;
+            isPortrait = false;
+        }
+        else return;
+        if (this.isPortrait != isPortrait) SetDeviceOrientation(isPortrait);
+    }
+    private bool isPortrait;
+#endif
+    private void SetDeviceOrientation(bool isPortrait)
+    {
+#if UNITY_ANDROID
+        this.isPortrait = isPortrait;
+#endif
+        for (int i = 0; i < landscapes.Length; i++)
+        {
+            landscapes[i].SetActive(!isPortrait);
+            portraits[i].SetActive(isPortrait);
+        }
+        /* 옮겨야 할 오브젝트
+         * Set Icon의 모든 오브젝트
+         * 옵션창과 플레이리스트의 위치
+         * 인게임에서의 점수창, 진화의고리 위치
+         * 게임 종료 후 스크린샷, 베스트 스코어 위치
+         * 스크린샷 : 
+         * Landscape의 경우 가로 864를 기준으로 세팅
+         * Portrait의 경우 세로 720을 기준으로 세팅
+         */
+
+        // Portrait 세팅
+        if (isPortrait)
+        {
+            canvasScaler.referenceResolution = new Vector2(1080, 1920);
+            canvasScaler.matchWidthOrHeight = 0;
+
+            for (int i = 0; i < movedChilds.Length; i++)
+            {
+                movedChilds[i].transform.SetParent(portraitParents[i]);
+                movedChilds[i].anchoredPosition = Vector2.zero;
+                movedChilds[i].localScale = Vector3.one;
+            }
+
+            iconsParent.sizeDelta = new Vector2(725, 125 * ((icons.Count - 1) / 6 + 1));
+            gameEndScreenShot.rectTransform.sizeDelta = new Vector2(720 / CameraController.Instance.Ratio, 720);
+        }
+        // LandScape 세팅
+        else
+        {
+            canvasScaler.referenceResolution = new Vector2(1920, 1080);
+            canvasScaler.matchWidthOrHeight = 1;
+
+            for (int i = 0; i < movedChilds.Length; i++)
+            {
+                movedChilds[i].transform.SetParent(landscapeParents[i]);
+                movedChilds[i].anchoredPosition = Vector2.zero;
+                movedChilds[i].localScale = Vector3.one;
+            }
+
+            iconsParent.sizeDelta = new Vector2(475, 125 * ((icons.Count - 1) / 4 + 1));
+            gameEndScreenShot.rectTransform.sizeDelta = new Vector2(864, 864 / CameraController.Instance.Ratio);
+        }
+        CameraController.Instance.SetCameraSize(isPortrait);
+    }
+
     public void SetIcons(List<Sprite> sprites, int targetCount = -1)
     {
         if (targetCount != -1)
@@ -131,8 +232,13 @@ public class UIController : MonoBehaviour
             icon.SetIcon(sprites[i], i);
             icons.Add(icon);
         }
-
+#if UNITY_STANDALONE
         iconsParent.sizeDelta = new Vector2(475, 125 * ((icons.Count - 1) / 4 + 1));
+#endif
+#if UNITY_ANDROID
+        if (isPortrait) iconsParent.sizeDelta = new Vector2(725, 125 * ((icons.Count - 1) / 6 + 1));
+        else iconsParent.sizeDelta = new Vector2(475, 125 * ((icons.Count - 1) / 4 + 1));
+#endif
     }
 
 #if UNITY_ANDROID
@@ -151,7 +257,7 @@ public class UIController : MonoBehaviour
     public void ChangeScene(int index)
     {
         gameEndObject.SetActive(false);
-        giveupButton.SetActive(index == 2);
+        foreach (var go in giveupButtons) go.SetActive(index == 2);
         for (int i = 0; i < scenes.Length; i++)
             scenes[i].SetActive(i == index);
     }
@@ -181,12 +287,14 @@ public class UIController : MonoBehaviour
     {
         SoundController.Instance.SetBgmVolume((int)bgmSlider.value);
         bgmValueText.text = ((int)bgmSlider.value).ToString();
+        DataManager.SaveSetting();
     }
 
     public void AdjustSFX()
     {
         SoundController.Instance.SetSfxVolume((int)sfxSlider.value);
         sfxValueText.text = ((int)sfxSlider.value).ToString();
+        DataManager.SaveSetting();
     }
 
     public void PlayPause()
