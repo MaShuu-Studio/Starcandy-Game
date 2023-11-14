@@ -647,10 +647,10 @@ RectTransform:
   - {fileID: 946914221}
   m_Father: {fileID: 1253804117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 37.5, y: -25}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &53442704
 GameObject:
@@ -11352,10 +11352,10 @@ RectTransform:
   - {fileID: 239412551}
   m_Father: {fileID: 1253804117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 87.5, y: -25}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &832489206
 GameObject:
@@ -13937,10 +13937,10 @@ RectTransform:
   - {fileID: 1261827657}
   m_Father: {fileID: 1253804117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 62.5, y: -25}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1041675524
 GameObject:
@@ -22541,375 +22541,625 @@ MonoBehaviour:
   - "\uCE74\uD0C0\uC624\uBAA8\uC774"
   - "\uC2E4\uB8E8\uC5E3 with _"
   - Everything Goes On with _
+  - Human (a android works)
+  - "\uB9C8\uCE74\uB871"
+  - "\uBC24\uC774 \uB418\uBA74 \uACBD\uC2ED\uD314\uC740"
+  - "\uC0E4\uB9C8"
+  - "\uC131\uAC04\uBE44\uD589 1\uC808"
+  - "\uC2A4\uD2B8\uB77C\uD1A0 \uC2A4\uD154\uB77C"
+  - "\uC544\uC774\uBCF4\uB9AC"
+  - "\uC544\uD6D4\uC758 \uBE44\uD2B8"
+  - "\uC694\uC2DC\uB2E4, \uAC00\uCD9C\uD55C\uB300"
+  - "\uC774\uC2DD\uBCF4\uD589"
+  - "\uD0AC\uB9C8"
+  - "\uD5DD\uADF8\uB9AC \uB2C8\uCF5C \uB300\uC0ACO"
+  - "\uD5DD\uADF8\uB9AC \uB2C8\uCF5C"
+  - "JPOP \uBA54\uB4E4\uB9AC"
   bgmClips:
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: a8fd08345e16709468e4acab204e41e2, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 16bdad58edbed854594e85cdff2478af, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: ecd62b5d7dca2084e8649336bafc58db, type: 3}
     n: 1
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 0da21989d5f99be41857bed7226ed61a, type: 3}
     n: 1
     c: 0
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 20051eecfc2f8ea48b08c2c011d00a30, type: 3}
     n: 1
     c: 0
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: e5085ad9b09889f4eb46c618570a4a2f, type: 3}
     n: 1
     c: 1
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: c1d26df6f48d65644962783168f9101a, type: 3}
     n: 1
     c: 1
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 5173375eebe7a894c9531482828a6623, type: 3}
     n: 1
     c: 1
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: d0e2866adf6f8f74cbf44e6f933d0b6e, type: 3}
     n: 1
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 88a7896448213694c818e9aaedc222ac, type: 3}
     n: 1
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 3c69f70255b56e4458cd9e4369043c38, type: 3}
     n: 1
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 2c16db31bf59dca48841df07d9afa95a, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 69202229aca4b044ba8101b1b396ee4c, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: d8ec7bebd56d8eb41b234569733141bb, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 7bcf85b55ddd29747b4761c3f0a5d5d2, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 80c61dfea91415f4e8e5a73fdc1d3ec4, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 38b52d6cec573c74086952f95334f4b1, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 25dd044689e2e5a459eb392dba8f5328, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 2f7cebdea2494034b914c631f9906d02, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: afba5c26f06a2bd44be48c9bffcd573a, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 9fb636ca5f6ba0245a3a8c00a078bb5f, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 84070d46651f17248b7c9454b1101804, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 44720ea2a1b528b47895fbca92fe6f38, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 1acf932c25201cb468ec74172ce60a89, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 9ebcff7fd9efa014da161ea89ad298fa, type: 3}
     n: 0
     c: 0
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 3f2fb7a5e3ccfc5428336d7fbe5e2934, type: 3}
     n: 1
     c: 1
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 302b56fcd526bbc499eecc896a466653, type: 3}
     n: 1
     c: 1
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: db85a48ef781af94dba5407b6ca9c9c5, type: 3}
     n: 1
     c: 1
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: b1fb7a3f138a4394292f7efb5891926d, type: 3}
     n: 1
     c: 1
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: a20c654bffbb11a409a8b043e474b950, type: 3}
     n: 1
     c: 1
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: b777ae047fc505c4382c00da4fa4041d, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 9e2496e3bf851334ca6c9ec7fec89ae5, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: f5581ea5c7351984499be46d9705260e, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 5e2216cbb9fd4e54ebc2e980ca620da1, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 86391e71eb84d8349a02ab48fcea65a6, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 3d1218992315e9d4d95236a5aad740b7, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: cf9a1931c08b7e343825e0c10eefe1b4, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 8d0e5a96f780bac4ea29962f89d6cded, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 629d8e735563efb44a31befffeda70ec, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 6a31d30fd60017f4bb15d9fab5d298ef, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: c73cefcfdcc1e1b4d8267f7df6be840a, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 90162a547f2d06049be29a8a072052cd, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: b7b73b0846ec63940bf977dc5cc2866a, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 077dabe382b48c245819b547ec1a0179, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 7ebdf5d153dcc5d40b68621bfc561a8a, type: 3}
     n: 0
     c: 1
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 55dcaa8e7af558144bac8d7d2e7966dc, type: 3}
     n: 0
     c: 1
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 02b4172d25379e74cb79c76b796b3aff, type: 3}
     n: 0
     c: 1
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: ba7067013c7817346b8ab98440b82b2f, type: 3}
     n: 0
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 7529457e60c8510418f60ddd961839fa, type: 3}
     n: 0
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 923d9192f36166243ae68c0140cc6ae5, type: 3}
     n: 0
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 39acdee0c4dd43d4ab95a4315a129a9f, type: 3}
     n: 0
     c: 0
     v: 0
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 4a53a9442993cb841b98cf35258c0d06, type: 3}
     n: 1
     c: 1
     v: 1
     t: 1
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 29b51a72d16ccc141a4e0f79e4932da0, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 91cb3331e06ee0a428648ce3013ce36d, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: f22abf1f1e3250f4cbabc76bcd2ae6f8, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 6e4c107d278d43844ba124e36f175325, type: 3}
     n: 0
     c: 1
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 25bdb2c637e7d8844ba02587827bcd13, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 1080529bb5a69a041b073a855a7a49e5, type: 3}
     n: 1
     c: 1
     v: 1
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 50623802499029649ad5ce0d0c52c6d4, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 77c75ce67b41fe145b7c7145d0b8ee4b, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 2c50bca8c5e010d4e92fcadb3a89c4d5, type: 3}
     n: 1
     c: 0
     v: 0
     t: 0
-  - name: 
+  - index: 0
+    isPlist: 1
+    name: 
     clip: {fileID: 8300000, guid: 88967169c8ee87442b21092eb58e9845, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 910713387b88f064db8c37532dd93c78, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: cc79d26b4175aa94f80c94c7102220c2, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: ed96265da09ab4e40b61ee4b918371bb, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 0d84976db4c4c3644abca946e2a8eb30, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 13e9036eb182b71438d89b6c495e5821, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 3a107464c14b74142afe9f9a13ed09f5, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: fb9d3f0e03aeba7478251508daf77a7e, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: fa1c561c1849fe641a0fb0fb9e37a2cb, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: a39c583d777ac114ea9ff41659ee04f2, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 320d33af3b9d5a142b00bfa540704bfd, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: aa9f019793a494648884f58048bfa7ed, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 6938d2285339f6a4586c9287b6bd4687, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 5b7dc271d0bf63d4dae923980d67386b, type: 3}
+    n: 1
+    c: 0
+    v: 0
+    t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: 2855d09ce06b7624ca35d8427776b194, type: 3}
     n: 1
     c: 0
     v: 0
@@ -24772,10 +25022,10 @@ RectTransform:
   - {fileID: 845448671}
   m_Father: {fileID: 1253804117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 112.5, y: -25}
+  m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1931165945
 GameObject:
@@ -27346,7 +27596,7 @@ GameObject:
   - component: {fileID: 2090292770}
   - component: {fileID: 2090292771}
   m_Layer: 0
-  m_Name: Deselect All
+  m_Name: Deselect ALL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -140,7 +140,7 @@ public class SoundController : MonoBehaviour
         return false;
     }
 
-    public void SetPlaylist(List<int> plist)
+    public void SetPlaylist(int amount, List<int> plist)
     {
         if (plist.Count == 0) SetAllMusic(true);
         else
@@ -149,6 +149,14 @@ public class SoundController : MonoBehaviour
             // 이미 노래의 정렬이 끝났기 때문에 직접 세팅하러 다닐 필요가 있음.
             // Init의 순서를 바꾸는 것도 방법이지만 노래의 갯수가 기하급수적으로 많지 않으므로
             // O(n^2)로 세팅해주는 대신에 다른 코드와 충돌이 나지 않도록 함.
+
+            // 새롭게 추가된 곡이 있을 경우
+            if (bgmClips.Length > amount)
+            {
+                for (int index = amount; index < bgmClips.Length; index++)
+                    plist.Add(index);
+            }
+
             foreach (var index in plist)
             {
                 for (int i = 0; i < bgmClips.Length; i++)
@@ -160,6 +168,7 @@ public class SoundController : MonoBehaviour
                     }
                 }
             }
+
         }
     }
 

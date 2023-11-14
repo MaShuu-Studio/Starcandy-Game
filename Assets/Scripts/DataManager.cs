@@ -49,13 +49,14 @@ public static class DataManager
 
         // 새 방식: 앞에 체킹용 string이 존재하며 콜론으로 데이터와 구분
         // VERSION:version - 버전체커가 없으면 위의 방식을 따른다고 판단. 로드 시 활용
-        // BGM:index,volume,playType
+        // BGM:index,amount,volume,playType
         // SFX:volume
         // PLAYLIST:재생목록(,)
         // ICON:iconIndexes(,)        
 
         string setting = $"VERSION:{Application.version}{Environment.NewLine}";
         setting += $"BGM:{SoundController.Instance.BgmIndex}," +
+            $"{SoundController.Instance.BgmClips.Length}," +
             $"{SoundController.Instance.BgmVolume}," +
             $"{(int)SoundController.Instance.PType}{Environment.NewLine}";
 
@@ -82,11 +83,12 @@ public static class DataManager
 
     public static void LoadSetting()
     {
-        int bgm, bgmV, sfxV;
+        int bgmamount, bgm, bgmV, sfxV;
         int[] arr = new int[11];
         List<int> plist = new List<int>();
         int ptype;
 
+        bgmamount = SoundController.Instance.BgmClips.Length;
         bgm = 0;
         bgmV = 1;
         sfxV = 1;
@@ -115,7 +117,7 @@ public static class DataManager
             {
                 // 새 방식: 앞에 체킹용 string이 존재하며 콜론으로 데이터와 구분
                 // VERSION:version - 버전체커가 없으면 위의 방식을 따른다고 판단. 로드 시 활용
-                // BGM:index,volume,playType
+                // BGM:index,amount,volume,playType
                 // SFX:volume
                 // PLAYLIST:재생목록(,)
                 // ICON:iconIndexes(,)       
@@ -132,10 +134,11 @@ public static class DataManager
                         switch (info[0].ToUpper())
                         {
                             case "BGM":
-                                if (datas.Length < 3) continue;
+                                if (datas.Length < 4) continue;
                                 int.TryParse(datas[0], out bgm);
-                                int.TryParse(datas[1], out bgmV);
-                                int.TryParse(datas[2], out ptype);
+                                int.TryParse(datas[1], out bgmamount);
+                                int.TryParse(datas[2], out bgmV);
+                                int.TryParse(datas[3], out ptype);
                                 break;
                             case "SFX":
                                 int.TryParse(datas[0], out sfxV);
@@ -163,7 +166,7 @@ public static class DataManager
         UIController.Instance.SetBgmVolume(bgmV);
         SoundController.Instance.SetPlayType(ptype);
         UIController.Instance.SetSfxVolume(sfxV);
-        SoundController.Instance.SetPlaylist(plist);
+        SoundController.Instance.SetPlaylist(bgmamount, plist);
         SpriteManager.Instance.SetSpriteIndexes(arr);
     }
 
