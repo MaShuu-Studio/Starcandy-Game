@@ -172,7 +172,9 @@ public class UIController : MonoBehaviour
 
     public void AddPlaylist(int index, bool b)
     {
+        if (plItems == null || index >= plItems.Count) return;
         plItems[index].AddPlaylist(b);
+        DataManager.SaveSetting();
     }
 
     public void AdjustBGM()

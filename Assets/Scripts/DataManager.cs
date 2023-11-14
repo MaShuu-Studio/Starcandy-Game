@@ -40,21 +40,42 @@ public static class DataManager
 
     public static void SaveSetting()
     {
-        // 가벼운 프로젝트인 만큼 간단하게 처리
+        // 기존 방식: 가벼운 프로젝트인 만큼 간단하게 처리
         // 0: bgmIndex
         // 1: bgmVolume
         // 2: sfxVolume
         // 3 ~ 13: iconIndex
         // 14: bgmPlayType
 
-        string setting = SoundController.Instance.BgmIndex.ToString() + ",";
-        setting += SoundController.Instance.BgmVolume.ToString() + ",";
-        setting += SoundController.Instance.SfxVolume.ToString() + ",";
+        // 새 방식: 앞에 체킹용 string이 존재하며 콜론으로 데이터와 구분
+        // VERSION:version - 버전체커가 없으면 위의 방식을 따른다고 판단. 로드 시 활용
+        // BGM:index,volume,playType
+        // SFX:volume
+        // PLAYLIST:재생목록(,)
+        // ICON:iconIndexes(,)        
+
+        string setting = $"VERSION:{Application.version}{Environment.NewLine}";
+        setting += $"BGM:{SoundController.Instance.BgmIndex}," +
+            $"{SoundController.Instance.BgmVolume}," +
+            $"{(int)SoundController.Instance.PType}{Environment.NewLine}";
+
+        setting += $"SFX:{SoundController.Instance.SfxVolume}{Environment.NewLine}";
+
+        setting += $"PLAYLIST:";
+        for (int i = 0; i < SoundController.Instance.Playlist.Count; i++)
+        {
+            setting += SoundController.Instance.Playlist[i].ToString() + ",";
+        }
+        setting = setting.TrimEnd(',');
+        setting += Environment.NewLine;
+
+        setting += "ICON:";
         for (int i = 0; i < SpriteManager.Instance.SpriteIndexes.Length; i++)
         {
             setting += SpriteManager.Instance.SpriteIndexes[i].ToString() + ",";
         }
-        setting += (int)SoundController.Instance.PType + ",";
+        setting = setting.TrimEnd(',');
+        setting += Environment.NewLine;
 
         File.WriteAllText(settingPath, setting);
     }
@@ -63,35 +84,87 @@ public static class DataManager
     {
         int bgm, bgmV, sfxV;
         int[] arr = new int[11];
+        List<int> plist = new List<int>();
         int ptype;
-        if (File.Exists(settingPath) == false)
-        {
-            bgm = 0;
-            bgmV = 1;
-            sfxV = 1;
-            arr = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            ptype = 0;
-        }
-        else
-        {
-            string setting = File.ReadAllText(settingPath);
-            string[] settings = setting.Split(",");
 
-            int.TryParse(settings[0], out bgm);
-            int.TryParse(settings[1], out bgmV);
-            int.TryParse(settings[2], out sfxV);
-            for (int i = 0; i < arr.Length && i < setting.Length - 3; i++)
+        bgm = 0;
+        bgmV = 1;
+        sfxV = 1;
+        arr = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        ptype = 0;
+
+        if (File.Exists(settingPath))
+        {
+            // 기존 방식. 버전체커가 없다면 진행.            
+            string setting = File.ReadAllText(settingPath);
+            if (setting.IndexOf("VERSION") == -1)
             {
-                int.TryParse(settings[i + 3], out arr[i]);
+                string[] settings = setting.Split(",");
+
+                int.TryParse(settings[0], out bgm);
+                int.TryParse(settings[1], out bgmV);
+                int.TryParse(settings[2], out sfxV);
+                for (int i = 0; i < arr.Length && i < setting.Length - 3; i++)
+                {
+                    int.TryParse(settings[i + 3], out arr[i]);
+                }
+                int.TryParse(settings[14], out ptype);
             }
-            int.TryParse(settings[14], out ptype);
+            // 수정한 방식
+            else
+            {
+                // 새 방식: 앞에 체킹용 string이 존재하며 콜론으로 데이터와 구분
+                // VERSION:version - 버전체커가 없으면 위의 방식을 따른다고 판단. 로드 시 활용
+                // BGM:index,volume,playType
+                // SFX:volume
+                // PLAYLIST:재생목록(,)
+                // ICON:iconIndexes(,)       
+
+                string[] settings = setting.Split(Environment.NewLine);
+                foreach (var line in settings)
+                {
+                    if (line != null)
+                    {
+                        // 0은 타입, 1은 정보
+                        string[] info = line.Trim().Split(":");
+                        if (info.Length < 2) continue;
+                        string[] datas = info[1].Split(",");
+                        switch (info[0].ToUpper())
+                        {
+                            case "BGM":
+                                if (datas.Length < 3) continue;
+                                int.TryParse(datas[0], out bgm);
+                                int.TryParse(datas[1], out bgmV);
+                                int.TryParse(datas[2], out ptype);
+                                break;
+                            case "SFX":
+                                int.TryParse(datas[0], out sfxV);
+                                break;
+                            case "PLAYLIST":
+                                for (int i = 0; i < datas.Length; i++)
+                                {
+                                    int index;
+                                    int.TryParse(datas[i], out index);
+                                    if (plist.Contains(index) == false)
+                                        plist.Add(index);
+                                }
+                                break;
+                            case "ICON":
+                                for (int i = 0; i < arr.Length && i < datas.Length; i++)
+                                    int.TryParse(datas[i], out arr[i]);
+                                break;
+                        }
+                    }
+                }
+            }
         }
 
         SoundController.Instance.SetBgm(bgm);
         UIController.Instance.SetBgmVolume(bgmV);
-        UIController.Instance.SetSfxVolume(sfxV);
-        SpriteManager.Instance.SetSpriteIndexes(arr);
         SoundController.Instance.SetPlayType(ptype);
+        UIController.Instance.SetSfxVolume(sfxV);
+        SoundController.Instance.SetPlaylist(plist);
+        SpriteManager.Instance.SetSpriteIndexes(arr);
     }
 
     public static void SaveScore(int[] bestScore)

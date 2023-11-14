@@ -33,7 +33,19 @@ public class SoundController : MonoBehaviour
     private bool pause;
     public string[] BgmNames { get { return bgmNames; } }
     public BGMClip[] BgmClips { get { return bgmClips; } }
-    private bool[] bgmIndexes;
+    public List<int> Playlist
+    {
+        get
+        {
+            List<int> plist = new List<int>();
+            foreach (var clip in bgmClips)
+            {
+                if (clip.isPlist) plist.Add(clip.index);
+            }
+            plist.Sort();
+            return plist;
+        }
+    }
     public int BgmIndex { get { return bgmIndex; } }
     private int bgmIndex;
 
@@ -43,7 +55,6 @@ public class SoundController : MonoBehaviour
     [Space]
     [SerializeField] private CustomAudioSource sfxPrefab;
     private Dictionary<string, SoundPool> sfxPools;
-
 
     public int BgmVolume { get { return bgmVolume; } }
     private int bgmVolume = 1;
@@ -60,9 +71,11 @@ public class SoundController : MonoBehaviour
 
         for (int i = 0; i < bgmNames.Length; i++)
         {
+            bgmClips[i].index = i;
             bgmClips[i].name = bgmNames[i];
         }
 
+        // 재생목록 정렬
         for (int i = 0; i < bgmClips.Length; i++)
         {
             for (int j = i; j < bgmClips.Length; j++)
@@ -75,10 +88,6 @@ public class SoundController : MonoBehaviour
                 }
             }
         }
-
-        bgmIndexes = new bool[bgmNames.Length];
-        for (int i = 0; i < bgmIndexes.Length; i++)
-            bgmIndexes[i] = true;
 
         sfxes = new Dictionary<string, AudioClip>();
         sfxPools = new Dictionary<string, SoundPool>();
@@ -115,11 +124,8 @@ public class SoundController : MonoBehaviour
 
     public void SetAllMusic(bool b)
     {
-        for (int i = 0; i < bgmIndexes.Length; i++)
-        {
-            bgmIndexes[i] = b;
-            UIController.Instance.AddPlaylist(i, b);
-        }
+        for (int i = 0; i < bgmClips.Length; i++)
+            ChangePlaylist(i, b);
     }
 
     public void ChangeBGMProgress(float p)
@@ -129,9 +135,32 @@ public class SoundController : MonoBehaviour
 
     public bool CheckRemainMusic()
     {
-        for (int i = 0; i < bgmIndexes.Length; i++)
-            if (bgmIndexes[i]) return true;
+        for (int i = 0; i < bgmClips.Length; i++)
+            if (bgmClips[i].isPlist) return true;
         return false;
+    }
+
+    public void SetPlaylist(List<int> plist)
+    {
+        if (plist.Count == 0) SetAllMusic(true);
+        else
+        {
+            SetAllMusic(false);
+            // 이미 노래의 정렬이 끝났기 때문에 직접 세팅하러 다닐 필요가 있음.
+            // Init의 순서를 바꾸는 것도 방법이지만 노래의 갯수가 기하급수적으로 많지 않으므로
+            // O(n^2)로 세팅해주는 대신에 다른 코드와 충돌이 나지 않도록 함.
+            foreach (var index in plist)
+            {
+                for (int i = 0; i < bgmClips.Length; i++)
+                {
+                    if (bgmClips[i].index == index)
+                    {
+                        ChangePlaylist(i, true);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void PlaylistPreset(int index)
@@ -139,36 +168,24 @@ public class SoundController : MonoBehaviour
         switch (index)
         {
             case 0:
-                for (int i = 0; i < bgmIndexes.Length; i++)
+                for (int i = 0; i < bgmClips.Length; i++)
                     if (bgmClips[i].n)
-                    {
-                        bgmIndexes[i] = true;
-                        UIController.Instance.AddPlaylist(i, true);
-                    }
+                        ChangePlaylist(i, true);
                 break;
             case 1:
-                for (int i = 0; i < bgmIndexes.Length; i++)
+                for (int i = 0; i < bgmClips.Length; i++)
                     if (bgmClips[i].c)
-                    {
-                        bgmIndexes[i] = true;
-                        UIController.Instance.AddPlaylist(i, true);
-                    }
+                        ChangePlaylist(i, true);
                 break;
             case 2:
-                for (int i = 0; i < bgmIndexes.Length; i++)
+                for (int i = 0; i < bgmClips.Length; i++)
                     if (bgmClips[i].v)
-                    {
-                        bgmIndexes[i] = true;
-                        UIController.Instance.AddPlaylist(i, true);
-                    }
+                        ChangePlaylist(i, true);
                 break;
             case 3:
-                for (int i = 0; i < bgmIndexes.Length; i++)
+                for (int i = 0; i < bgmClips.Length; i++)
                     if (bgmClips[i].t)
-                    {
-                        bgmIndexes[i] = true;
-                        UIController.Instance.AddPlaylist(i, true);
-                    }
+                        ChangePlaylist(i, true);
                 break;
         }
     }
@@ -191,7 +208,7 @@ public class SoundController : MonoBehaviour
 
     public void ChangePlaylist(int index, bool b)
     {
-        bgmIndexes[index] = b;
+        bgmClips[index].isPlist = b;
         UIController.Instance.AddPlaylist(index, b);
     }
 
@@ -217,8 +234,8 @@ public class SoundController : MonoBehaviour
         if (CheckRemainMusic() == false) return;
 
         List<int> list = new List<int>();
-        for (int i = 0; i < bgmIndexes.Length; i++)
-            if (bgmIndex != i && bgmIndexes[i]) list.Add(i);
+        for (int i = 0; i < bgmClips.Length; i++)
+            if (bgmIndex != i && bgmClips[i].isPlist) list.Add(i);
 
         int rand = Random.Range(0, list.Count);
         SetBgm(list[rand]);
@@ -233,7 +250,7 @@ public class SoundController : MonoBehaviour
             bgmIndex += i;
             if (bgmIndex < 0) bgmIndex = bgmClips.Length - 1;
             else if (bgmIndex >= bgmClips.Length) bgmIndex = 0;
-        } while (bgmIndexes[bgmIndex] == false);
+        } while (bgmClips[bgmIndex].isPlist == false);
 
         SetBgm(bgmIndex);
     }

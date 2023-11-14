@@ -39,6 +39,8 @@ public class BGMClipDrawer : PropertyDrawer
 [System.Serializable]
 public class BGMClip
 {
+    public int index;
+    public bool isPlist = true;
     public string name;
     public AudioClip clip;
     public bool n, c, v, t;
