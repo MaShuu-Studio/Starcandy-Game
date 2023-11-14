@@ -46,6 +46,9 @@ public class SoundController : MonoBehaviour
             return plist;
         }
     }
+
+    private List<int>[] memberPlaylist;
+
     public int BgmIndex { get { return bgmIndex; } }
     private int bgmIndex;
 
@@ -89,6 +92,21 @@ public class SoundController : MonoBehaviour
             }
         }
 
+        // 멤버별 플레이리스트 생성
+        memberPlaylist = new List<int>[4];
+        for (int m = 0; m < memberPlaylist.Length; m++)
+        {
+            memberPlaylist[m] = new List<int>();
+            for (int i = 0; i < bgmClips.Length; i++)
+            {
+                if (m == 0 && bgmClips[i].n
+                    || m == 1 && bgmClips[i].c
+                    || m == 2 && bgmClips[i].v
+                    || m == 3 && bgmClips[i].t)
+                    memberPlaylist[m].Add(i);
+            }
+        }
+
         sfxes = new Dictionary<string, AudioClip>();
         sfxPools = new Dictionary<string, SoundPool>();
         for (int i = 0; i < sfxNames.Count && i < sfxClips.Count; i++)
@@ -122,7 +140,7 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    public void SetAllMusic(bool b)
+    private void SetAllMusic(bool b)
     {
         for (int i = 0; i < bgmClips.Length; i++)
             ChangePlaylist(i, b);
@@ -172,30 +190,43 @@ public class SoundController : MonoBehaviour
         }
     }
 
-    public void PlaylistPreset(int index)
+    public void PlaylistPreset(int member)
     {
-        switch (index)
+        bool b = false;
+        // 하나라도 false면 true로 바뀌지만
+        // 전부 true면 false임.
+
+        // -1의 경우에는 ALL임 그 외에는 멤버임.
+        if (member == -1)
         {
-            case 0:
-                for (int i = 0; i < bgmClips.Length; i++)
-                    if (bgmClips[i].n)
-                        ChangePlaylist(i, true);
-                break;
-            case 1:
-                for (int i = 0; i < bgmClips.Length; i++)
-                    if (bgmClips[i].c)
-                        ChangePlaylist(i, true);
-                break;
-            case 2:
-                for (int i = 0; i < bgmClips.Length; i++)
-                    if (bgmClips[i].v)
-                        ChangePlaylist(i, true);
-                break;
-            case 3:
-                for (int i = 0; i < bgmClips.Length; i++)
-                    if (bgmClips[i].t)
-                        ChangePlaylist(i, true);
-                break;
+            for (int i = 0; i < bgmClips.Length; i++)
+            {
+                if (bgmClips[i].isPlist == false)
+                {
+                    b = true;
+                    break;
+                }
+            }
+
+            SetAllMusic(b);
+        }
+        else
+        {
+            for (int i = 0; i < memberPlaylist[member].Count; i++)
+            {
+                int index = memberPlaylist[member][i];
+                if (bgmClips[index].isPlist == false)
+                {
+                    b = true;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < memberPlaylist[member].Count; i++)
+            {
+                int index = memberPlaylist[member][i];
+                ChangePlaylist(index, b);
+            }
         }
     }
 
