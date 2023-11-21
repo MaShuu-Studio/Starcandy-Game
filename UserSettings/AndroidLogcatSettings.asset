@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "2a5296001b027ece",
         "name": "com.Shuu.StarcandyGame",
-        "processId": 19618,
+        "processId": 24363,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -90,6 +90,12 @@
             "deviceId": "2a5296001b027ece",
             "name": "com.Shuu.StarcandyGame",
             "processId": 19618,
+            "exited": false
+        },
+        {
+            "deviceId": "2a5296001b027ece",
+            "name": "com.Shuu.StarcandyGame",
+            "processId": 24363,
             "exited": false
         }
     ],

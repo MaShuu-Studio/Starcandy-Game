@@ -14539,7 +14539,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 78.65
+  m_fontSize: 250
   m_fontSizeBase: 250
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -26651,6 +26651,7 @@ MonoBehaviour:
   - "\uD5DD\uADF8\uB9AC \uB2C8\uCF5C \uB300\uC0ACO"
   - "\uD5DD\uADF8\uB9AC \uB2C8\uCF5C"
   - "JPOP \uBA54\uB4E4\uB9AC"
+  - "\uB9C8\uC74C\uC758 \uC0C1\uD638\uC791\uC6A9"
   bgmClips:
   - index: 0
     isPlist: 1
@@ -27260,6 +27261,14 @@ MonoBehaviour:
     c: 0
     v: 0
     t: 0
+  - index: 0
+    isPlist: 1
+    name: 
+    clip: {fileID: 8300000, guid: e05b961dbb104994a8e112783996c765, type: 3}
+    n: 1
+    c: 1
+    v: 1
+    t: 1
   sfxNames:
   - DROP
   - POP
